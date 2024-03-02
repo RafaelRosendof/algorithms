@@ -26,11 +26,11 @@ size_t bsearch(std::array<T, size> &arr , size_t l , size_t r , value_type targe
 
 
     while(l<=r){
-        size_t meio = r + (l+r)/2;
+        T meio = l + (r-l)/2;
 
         if(arr[meio] == target){return meio;}
 
-        else if (meio < target) {
+        else if (arr[meio] < target) {
             l = meio + 1; // l recebe meio
         }
         else{
@@ -51,11 +51,13 @@ int main(){
     size_t l{0};
     size_t r{tamanho - 1};
 
-    int target {78};
+    //int target {23};
 
-    int idx = bsearch(figas,  l,  r,  target);
-    if(idx == r+1){  std::cout<<"Não foi achado" << target << std::endl; }
-    else{ std::cout << "Valor " << target << " "<< idx << std::endl;}   
+    for(value_type target : figas){
+        int idx = bsearch(figas,  l,  r,  target);
+        if(idx == r+1){  std::cout<<"Não foi achado" << target << std::endl; }
+        else{ std::cout << "Valor " << target << " "<< idx << std::endl;}   
 
+    }
     return 0;
 }
