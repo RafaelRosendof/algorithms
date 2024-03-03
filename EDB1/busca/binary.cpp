@@ -41,6 +41,25 @@ size_t bsearch(std::array<T, size> &arr , size_t l , size_t r , value_type targe
 
 }
 
+//template <typename T>
+int * bsearch_point(int *first , int *last , int target){
+
+    while(first <= last){
+
+        int *meio = first + (last - first)/2;
+
+        if(*meio == target) {return meio;}
+
+        else if (*meio < target) {
+            first = meio + 1;
+        
+        }else{
+            last = meio - 1;
+        }
+    }
+    return nullptr;
+}
+
 
 int main(){
     constexpr size_t tamanho = 10;
@@ -59,5 +78,23 @@ int main(){
         else{ std::cout << "Valor " << target << " "<< idx << std::endl;}   
 
     }
+
+    std::cout<<"\n\n";
+
+    //for(value_type target : figas){
+   //     size_t idx = bsearch_point(figas, figas.size() ,  target);
+   //     if(idx == r+1){std::cout<<"Failed to find " << target <<std::endl;}
+    //    else{std::cout<< "Valor " << target << " " << idx << std::endl;}
+  //  }
+
+    constexpr int target{97};
+
+    int *res  = bsearch_point(figas.begin(), figas.end() - 1 ,  target);
+
+    if (res != nullptr) 
+        std::cout << "Value found at index " << target <<"  " << res - figas.begin() << std::endl; 
+    else 
+        std::cout << "Value not found" << std::endl; 
+ 
     return 0;
 }
