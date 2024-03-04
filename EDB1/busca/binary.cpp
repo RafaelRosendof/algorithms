@@ -60,6 +60,21 @@ int * bsearch_point(int *first , int *last , int target){
     return nullptr;
 }
 
+int *bsearch_rec(int *l , int *r , int target){
+    while(l <= r){
+        int *meio = l + (r-l)/2;
+
+        if(*meio == target) {return meio;}
+
+        else if(*meio < target){
+            return bsearch_rec(meio + 1, r,  target);
+        }else{
+            return bsearch_rec( l, meio - 1,  target);
+        }
+    }
+    return nullptr;
+}
+
 
 int main(){
     constexpr size_t tamanho = 10;
@@ -95,6 +110,14 @@ int main(){
         std::cout << "Value found at index " << target <<"  " << res - figas.begin() << std::endl; 
     else 
         std::cout << "Value not found" << std::endl; 
+
+    std::cout<<"\n\n";
+
+    int *res_rec = bsearch_rec(figas.begin(), figas.end() - 1, target);
+
+    if(res != nullptr){std::cout << "Value found at index " << target <<"  " << res_rec - figas.begin() << std::endl; }
+
+    else{std::cout<<"Value not found! "<<std::endl;}
  
     return 0;
 }
