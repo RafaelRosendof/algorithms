@@ -1,3 +1,0 @@
-/home/rafael/algorithms/EDB1/busca/cpp/build/CMakeFiles/MyProject.dir
-/home/rafael/algorithms/EDB1/busca/cpp/build/CMakeFiles/edit_cache.dir
-/home/rafael/algorithms/EDB1/busca/cpp/build/CMakeFiles/rebuild_cache.dir
