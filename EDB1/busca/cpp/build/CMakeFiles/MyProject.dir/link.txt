@@ -1,0 +1,1 @@
+/usr/bin/clang++ CMakeFiles/MyProject.dir/main_class.cpp.o CMakeFiles/MyProject.dir/main_test.cpp.o -o MyProject 
