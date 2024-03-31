@@ -1,0 +1,1 @@
+//Classe que implementa os testes para pior caso melhor, indiferente e radix Sort
