@@ -62,8 +62,58 @@ void selection(ForwardItr first, ForwardItr last, Compare cmp);
 template <typename ForwardItr, typename Compare>
 void quick(ForwardItr first, ForwardItr last, Compare cmp);
 
+//função auxiliar para ordenar o merge do mergesort
+template <typename ForwardItr , typename Compare>
+void aux_ordena(ForwardItr first , ForwardItr last , Compare cmp){
+//tenho que inicar dois vetores auxiliares
+  auto idx1 = std::distance(first , last);
+  auto idx2 = idx1/2;
+
+  std::vector<int> esquerda(idx2);
+  std::vector<int> direita(idx1 - idx2);
+
+  //copiando as metades para os vetores auxiliares 
+  std::copy(first , std::next(first , idx2) , esquerda.begin());
+  std::copy(std::next(first , idx2) , last , direita.begin());
+
+  auto run_idx1 = esquerda.begin();
+  auto run_idx2 = direita.begin();
+
+  //definindo um iterador auxiliar 
+  auto run_iter = first;
+
+  while(run_idx1 != esquerda.end() && run_idx2 != direita.end()){
+    if(cmp(*run_idx1 , *run_idx2)){
+      *run_iter = *run_idx1;
+      ++run_idx1;
+    }else {
+      *run_iter = *run_idx2;
+      ++run_idx2;
+    }
+    ++run_iter;
+  }
+  //Agora deve ser copiado de volta
+  //if chegou no final
+  if(run_idx1 != esquerda.end()){
+    std::copy(run_idx1 , esquerda.end() , run_iter);
+  }else{
+    std::copy(run_idx2 , direita.end() , run_iter);
+  }
+}
+
 template <typename ForwardItr, typename Compare>
-void mergesort(ForwardItr first, ForwardItr last, Compare cmp);
+void mergesort(ForwardItr first, ForwardItr last, Compare cmp){
+
+  auto tam = std::distance(first , last );
+
+  if(tam <= 1) {return;}
+
+  auto mid = std::next(first , tam/2);
+  mergesort(first , mid , cmp);
+  mergesort(mid , last , cmp);
+  aux_ordena(first , last , cmp);
+}
+
 
 template <typename ForwardItr, typename Compare>
 void shell(ForwardItr first, ForwardItr last, Compare cmp) {
@@ -92,12 +142,12 @@ template <typename DataType> void radix(DataType *first, DataType *last);
 } // namespace sa
 
 /*
-shell
-quicksort d
-mergesort d
-radix
+shell d
+quicksort 
+mergesort d 
+radix 
 bubble d
-select d
+select 
 insertion d
 
 */

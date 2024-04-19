@@ -30,6 +30,7 @@ int pares(int n , int arr[]){
   }
 }
 
+
 int impares(int n , int arr[]){
   if(n == 0){return arr[0] % 2 ? 1 : 0;}
 
@@ -137,11 +138,32 @@ int impares_1(int n){
   }
 }
 
+
 void binario(int n){
   if(n >1){
     binario(n/2);
   }
   std::cout<< "   " << n%2;
+}
+
+//parte 3
+int letras(std::string b){
+  if(b.empty()){return 0;}
+  else{
+    return 1 + letras(b.substr(1));
+  }
+}
+
+std::string inverte(std::string b){
+  if(b.empty()){return "";}
+
+  else{
+    return b.back() + inverte(b.substr(0,b.length() - 1));
+  }
+}
+
+int somin(int a , int b){
+  return a*b;
 }
 
 
@@ -161,6 +183,9 @@ int main() {
     int min_1 = menor_vdd(2117);
     int par_1 = pares_1(2222);
     int imp_1 = impares_1(2117);
+    int letss = letras("figas"); //5
+    int som = somin(4, 2*2*2*2);
+    std::string lets = inverte("figas");
    // int figas = binario(2117);
     int exp = 2117;
     binario(exp);
@@ -170,7 +195,7 @@ int main() {
     //else
     //    std::cout << "O array está vazio." << std::endl;
 
-   // std::cout<<"valor foi: " << imp_1<<std::endl;
+    std::cout<<"valor foi: " << som<<std::endl;
     return 0;
 }
 

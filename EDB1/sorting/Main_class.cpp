@@ -10,12 +10,13 @@ int main(){
 
     //sa::insertion(figas.begin(), figas.end(), sa::Compare);
 
-    sa::shell(figas.begin(), figas.end(), sa::Compare);
+    sa::mergesort(figas.begin() , figas.end() , sa::Compare);
+    //sa::shell(figas.begin(), figas.end(), sa::Compare);
     //sa::bubble(figas.begin(), figas.end(), sa::Compare);
     
-//    for(size_t i = 0; i < figas.size(); ++i){
-//        std::cout << " " << figas[i] << " ";
-//    }
+  //  for(size_t i = 0; i < figas.size(); ++i){
+  //      std::cout << " " << figas[i] << " ";
+  //  }
 
     std::cout << "\n\n\nArray elements:";
     for (const auto& element : figas) {
