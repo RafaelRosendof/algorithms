@@ -34,51 +34,35 @@ ListaDuplamenteEncadeada::~ListaDuplamenteEncadeada()
 
 bool ListaDuplamenteEncadeada::inserirOrdenado(std::string s)
 {	
-//	throw "\n!!! MÉTODO 'inserirOrdenado' AINDA NÃO FOI IMPLEMENTADO !!! \n";
-  /*
-	No<std::string> * atual = this->cabeca->getProximo();
-
-	while(atual != this->cauda && atual->getValor() > s)
-	{
-		atual = atual->getProximo();
-	}
-
-	if( atual != this->cauda && atual->getValor() == s )
-	{
-		return false;
-	}
-
-	No<std::string>* novo = new No<std::string>(s);
-	novo -> setProximo(atual);
-	novo -> setAnterior(atual->getAnterior());
-	atual -> getAnterior() -> setProximo(novo);
-	atual -> setAnterior(novo);
-
-	this->quantidade++;
-	return true;
-
-  */
-
-  auto aux = this->getCabeca()->getProximo();
-
-  while(aux != this->getCauda() && aux -> getValor() > s){
-	aux = aux -> getProximo();
-  }
-
-  if(aux != this->cauda && aux->getValor() == s){return false;}
-
+  auto aux = this -> cabeca -> getProximo();
   auto novo = new No<std::string>(s);
 
-  novo -> setProximo(aux);
-  novo -> setAnterior(aux->getAnterior());
+  while(aux != cauda){
+    
+    if(aux -> getValor() == s){
+      delete novo;
+      return false;
+    }
 
-  aux -> getAnterior() -> setProximo(novo);
-  aux -> setAnterior(novo);
+    if(aux -> getValor() < s){
+      novo -> setProximo(aux);
+      novo -> setAnterior(aux -> getAnterior());
+      aux -> getAnterior() -> setProximo(novo);
+      aux -> setAnterior(novo);
+      quantidade++;
+      return true;
+    }
 
-  this -> quantidade++;
+    aux = aux -> getProximo();
+  }
+
+  novo -> setProximo(cauda);
+  novo -> setAnterior(cauda -> getAnterior());
+  cauda -> getAnterior() -> setProximo(novo);
+  cauda -> setAnterior(novo);
+
+  quantidade++;
   return true;
-
-
 }
 
 No<std::string>* ListaDuplamenteEncadeada::getCabeca(void)

@@ -86,3 +86,50 @@ std::string ListaDupla::remove(int i){
     
 }
 
+bool ListaDupla::insertHead(std::string s){
+    No<std::string>* novo = new No<std::string>(s);
+    No<std::string>* aux = this->head->getNext();
+
+    novo->setPrevious(this->head);
+    novo->setNext(aux);
+    aux->setPrevious(novo);
+    this->head->setNext(novo);
+
+    ++quantity;
+
+    return true;
+}
+
+bool ListaDupla::insertTail(std::string s){
+    No<std::string>* novo = new No<std::string>(s);
+    No<std::string>* aux = this->tail->getPrevious();
+
+    novo->setPrevious(aux);
+    novo->setNext(this->tail);
+    aux->setNext(novo);
+    this->tail->setPrevious(novo);
+
+    ++quantity;
+
+    return true;
+}
+
+bool ListaDupla::insert(int i, std::string s){
+    No<std::string>* novo = new No<std::string>(s);
+    No<std::string>* aux = this->head->getNext();
+    int j = 0;
+
+    while (aux != this->tail && j < i) {
+        aux = aux->getNext();
+        j++;
+    }
+
+    novo->setPrevious(aux->getPrevious());
+    novo->setNext(aux);
+    aux->getPrevious()->setNext(novo);
+    aux->setPrevious(novo);
+
+    ++quantity;
+
+    return true;
+}

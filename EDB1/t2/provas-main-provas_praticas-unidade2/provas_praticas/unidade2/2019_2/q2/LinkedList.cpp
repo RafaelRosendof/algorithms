@@ -137,12 +137,48 @@ ListStatus LinkedList::checkConsistency()
 
 bool LinkedList::insertEnd(string s)
 {
-    std::cout << "\tERRO: LinkedList::insertEnd - not yet implemented.\n";
-    std::abort();
+    auto aux = this -> tail -> getPrevious();
+    auto novo = new Node<std::string>(s);
+
+    novo -> setNext(tail);
+    novo -> setPrevious(aux);
+    aux -> setNext(novo);
+    tail -> setPrevious(novo);
+
+    quantity++;
+    return true;
+
 }
 
 Node<string>* LinkedList::searchCF(string key)
 {
-	std::cout << "\tERRO: LinkedList::searchCF - not yet implemented.\n";
-    std::abort();
+    auto aux = head -> getNext();
+
+    while(aux != tail){
+
+        if(aux -> getValue() == key){
+
+        aux -> incrementCount();
+
+        auto temp = aux;
+
+        while(temp != head -> getNext() && temp -> getCount() > temp-> getPrevious()->getCount()){
+            auto prev = temp -> getPrevious();
+            auto next = temp -> getNext();
+
+            prev -> getPrevious() -> setNext(temp);
+            temp -> setPrevious(prev -> getPrevious());
+
+            temp -> setNext(prev);
+            prev -> setPrevious(temp);
+
+            prev -> setNext(next);
+            next -> setPrevious(prev);
+        }
+        return aux;
+    }
+    aux = aux -> getNext();
+    }
+
+    return nullptr;
 }

@@ -22,9 +22,30 @@ ListaEncadeada::~ListaEncadeada()
 
 void ListaEncadeada::inserirNoInicio(int e){auto n = new No<int>(e);if( inicio == nullptr ) inicio = n;else { n->setProximo( inicio );inicio = n;}}
 
-void ListaEncadeada::inverter()
-{
-    throw "\n!!! MÉTODO 'inverter' AINDA NÃO FOI IMPLEMENTADO !!! \n";
+void ListaEncadeada::inverter() {
+    auto anterior = nullptr; 
+    auto atual = inicio; 
+    auto proximo = nullptr; 
+
+    // Ajustar o ponteiro do início para o final da lista
+    if (inicio == nullptr) return;  // Lista vazia, nada a fazer
+    
+    // Continuar até o final da lista
+    while (atual != nullptr) {
+        // Armazenar o próximo nó
+        proximo = atual->getProximo();
+        
+        // Inverter o ponteiro do nó atual
+        atual->setProximo(anterior);
+        
+        // Avançar os ponteiros
+        anterior = atual;
+        atual = proximo;
+    }
+    
+    // O ponteiro anterior será o novo início da lista
+    inicio->setProximo(nullptr);  // O antigo início se torna o final
+    inicio = anterior;
 }
 
 No<int>* ListaEncadeada::getInicio()

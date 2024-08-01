@@ -38,29 +38,61 @@ void ListaEncadeada::inserirNoInicio(std::string elemento)
 
 bool  ListaEncadeada::e_simetrica()
 {
-    // Use essa pilha para resolver o problema
-    std::stack<std::string> pilha;
+    if(inicio == nullptr || inicio -> getProximo() == nullptr){
+        return true;
+    }
+    std::stack<std::string> pile;
 
-    auto aux = this->inicio;
-    while(aux != nullptr)
-    {
-        pilha.push(aux->getValor());
-        aux = aux->getProximo();
+    auto aux = inicio;
+    for(int i =0 ; i < quantidade/2 ; i++){
+        pile.push(aux ->getValor());
+        aux = aux -> getProximo();
     }
 
-    aux = this->inicio;
+    if(quantidade % 2 != 0){
+        aux = aux -> getProximo();
+    }
 
     while(aux != nullptr){
-        if(aux->getValor() != pilha.top()){
+        if(pile.top() != aux -> getValor()){
+            return false;
+        }
+        else{
+            pile.pop();
+            aux = aux -> getProximo();
+        }
+    }
+    return true;
+}
+
+
+
+/*
+    if(inicio == nullptr || inicio -> getProximo() == nullptr){
+        return true;
+    }
+    std::stack<std::string> pilha;
+    auto aux = inicio;
+
+    for(int i = 0 ; i < quantidade/2 ; i++){
+        pilha.push(aux -> getValor());
+        aux = aux -> getProximo();
+    }
+
+    if(quantidade % 2 != 0){
+        aux = aux -> getProximo();
+    }
+
+    while(aux != nullptr){
+        if(pilha.top() != aux ->getValor()){
             return false;
         }
         pilha.pop();
-        aux = aux->getProximo();
+        aux = aux -> getProximo();
     }
 
-    return true;//todo: drwan this on the paper to understand better
-}
-
+    return true;
+*/
 bool ListaEncadeada::vazia()
 {
     return this->inicio == nullptr;

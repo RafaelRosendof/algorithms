@@ -24,7 +24,27 @@ void ListaEncadeada::inserirNoInicio(int e){auto n = new No<int>(e);if( inicio =
 
 int ListaEncadeada::removerRepetidos()
 {
-    throw "\n!!! MÉTODO 'removerRepetidos' AINDA NÃO FOI IMPLEMENTADO !!! \n";
+    int removidos = 0;
+    if(inicio == nullptr || inicio->getProximo() == nullptr)
+    {
+        return 0;
+    }
+
+    auto aux = inicio;
+
+    while(aux -> getProximo() != nullptr){
+        auto aux2 = aux -> getProximo();
+
+        if(aux -> getValor() == aux2 -> getValor()){
+            aux -> setProximo(aux2 -> getProximo());
+            delete aux2;
+            removidos++;
+        }
+        else{
+            aux = aux -> getProximo();
+        } 
+    }
+    return removidos;
 }
 
 No<int>* ListaEncadeada::getInicio()

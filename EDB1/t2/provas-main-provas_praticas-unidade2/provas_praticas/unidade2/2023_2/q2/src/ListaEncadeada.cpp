@@ -35,39 +35,33 @@ void ListaEncadeada::inserirNoInicio(std::string elemento)
     }
 }
 
-bool ListaEncadeada::remover(std::string val)
-
-//check if the list is empty, if it is, return false
-//check if the first element is the one to be removed, if it is, remove it and return true
-//if the element is not the first, iterate over the list until the element is found
-//if the element is found, remove it and return true
-
-{
-    if (this->inicio == nullptr) {
-        return false; // List is empty, nothing to remove
+bool ListaEncadeada::remover(std::string val){
+    if(inicio == nullptr){
+        return false;
     }
 
-    if (this->inicio->getValor() == val) {
-        auto temp = this->inicio;
-        this->inicio = this->inicio->getProximo();
+    if(inicio -> getValor() == val){
+        auto temp = inicio;
+        inicio = inicio -> getProximo();
         delete temp;
-        --quantidade;
-        return true; // Element removed successfully
+        quantidade--;
+        return true;
     }
+    auto aux = this -> inicio;
 
-    auto current = this->inicio;
-    while (current->getProximo() != nullptr) {
-        if (current->getProximo()->getValor() == val) { //todo: draw this on the papper to understand better 
-            auto temp = current->getProximo();
-            current->setProximo(temp->getProximo());
-            delete temp;
-            --quantidade;
-            return true; // Element removed successfully
+    while(aux -> getProximo() != nullptr){
+        if(aux -> getProximo() -> getValor() == val){
+          auto temp = aux -> getProximo();
+          aux -> setProximo(temp -> getProximo());
+          delete temp;
+          quantidade--;
+          return true;
         }
-        current = current->getProximo(); //iterate over the list until the element is found
+
+        aux = aux -> getProximo();
     }
 
-    return false; // Element not found in the list
+    return false;
 }
 
 

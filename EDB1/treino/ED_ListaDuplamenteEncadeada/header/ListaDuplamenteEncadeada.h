@@ -22,6 +22,7 @@ typedef enum {
     ENCADEAMENTO_INCORRETO
 } StatusDaLista ;
 
+
 class ListaDuplamenteEncadeada {
 private:
     No<std::string>* cabeca;
@@ -55,3 +56,4 @@ public:
 };
 
 #endif 
+

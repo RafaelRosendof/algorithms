@@ -30,46 +30,72 @@ bool operando(std::string s)
 
 int resolverExpressao(std::vector<std::string> partesDaExpressao)
 {
-    std::stack<int> pilha;
+    std::stack<int> pile;
 
-    for(std::string parte : partesDaExpressao)
-    {
-        if( operando(parte) )
-        {
-            pilha.push( stoi(parte) );
-        }
-        else // significa que é um operador, i.e., +, -, *, /
-        {
-            int op2 = pilha.top();
-            pilha.pop();
-            int op1 = pilha.top();
-            pilha.pop();
+    for(std::string p : partesDaExpressao){
+        if(operando(p)){
+            pile.push(std::stoi(p));
+        }else{
+            int op2 = pile.top();
+            pile.pop();
+            int op1 = pile.top();
+            pile.pop();
 
-            int resultado;
+            int res = 0;
 
-            if(adicao(parte))
-            {
-                resultado = op1+op2;
+            if(adicao(p)){
+                res = op1 + op2;
             }
-            else if(subtracao(parte))
-            {
-                resultado = op1-op2;
+            else if(subtracao(p)){
+                res = op1 - op2;
             }
-            else if(multiplicacao(parte))
-            {
-                resultado = op1*op2;
+            else if(multiplicacao(p)){
+                res = op1 * op2;
             }
-            else if(divisao(parte))
-            {
-                resultado = op1/op2;
+            else if(divisao(p)){
+                res = op1 / op2;
             }
-            else
-            {
-                throw "Operador não reconhecido.";
-            }
-            pilha.push(resultado);
+
+            pile.push(res);
+
         }
     }
+    return pile.top();
+}
 
+
+/*
+    std::stack<int> pilha;
+
+    for(std::string parte : partesDaExpressao){
+
+      if(operando(parte)){
+        pilha.push(std::stoi(parte));
+      }
+      else{
+        int operando2 = pilha.top();
+        pilha.pop();
+
+        int operando1 = pilha.top();
+        pilha.pop();
+        
+        int res = 0;
+        if(adicao(parte)){
+          res = operando1 + operando2;
+        }
+        else if (subtracao(parte)) {
+         res = operando1 - operando2; 
+        }
+        else if(multiplicacao(parte)) {
+         res = operando1 * operando2; 
+        }
+        else if (divisao(parte)) {
+         res = operando1 / operando2; 
+        }
+
+        pilha.push(res);
+      }
+    }
     return pilha.top();
 }
+*/

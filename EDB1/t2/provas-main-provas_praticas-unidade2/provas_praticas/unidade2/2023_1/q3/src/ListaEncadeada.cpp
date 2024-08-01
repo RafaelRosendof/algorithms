@@ -1,7 +1,6 @@
 //
 //  ListaEncadeada.cpp
 //
-//  Created by Eiji Adachi Medeiros Barbosa
 //
 
 #include "../include/ListaEncadeada.h"
@@ -37,17 +36,19 @@ void ListaEncadeada::inserirNoInicio(std::string elemento)
 
 void  ListaEncadeada::ordenar()
 {
-    for(auto n1 = this->getInicio(); n1->getProximo() != nullptr; n1 = n1->getProximo())
-    {
-        for(auto n2 = n1->getProximo(); n2 != nullptr; n2 = n2->getProximo())
-        {
-            if(n1->getValor() > n2->getValor())
-            {
-                auto aux = n1->getValor();
-                n1->setValor(n2->getValor());
-                n2->setValor(aux);
+
+    if (inicio == nullptr || inicio->getProximo() == nullptr) {
+        return; // Lista vazia ou com um único elemento já está ordenada
+    }
+    
+    //bouble sort 
+    for(auto p1 = inicio -> getProximo() ; p1 != nullptr ; p1 = p1 -> getProximo()){
+        for(auto p2 = p1 -> getProximo() ; p2 != nullptr ; p2 = p2 -> getProximo()){
+            if(p1 -> getValor() > p2 ->getValor()){
+                p1 -> setProximo(p2 -> getProximo());
+                p2 -> setProximo(p1);
             }
-        }    
+        }
     }
 }
 

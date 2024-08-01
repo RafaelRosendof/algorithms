@@ -22,7 +22,37 @@ void ListaEncadeada::inserirNoInicio(int e){auto n = new No<int>(e);if( inicio =
 
 void ListaEncadeada::rotacionar(int x)
 {
-    throw "\n!!! MÉTODO 'rotacionar' AINDA NÃO FOI IMPLEMENTADO !!! \n";
+
+    //caso base 
+    if (inicio == nullptr || x <= 0 || inicio->getProximo() == nullptr) {
+        return;
+    }
+
+    x = x % quantidade;
+    if(x == 0)
+    {
+        return;
+    }
+
+    auto aux = inicio;
+    for(int i = 0 ; i < quantidade - x - 1; i++)
+    {
+        aux = aux -> getProximo();
+    }
+
+    auto aux2 = aux -> getProximo();
+
+    auto ultimo = aux2;
+
+    while(ultimo -> getProximo() != nullptr){
+        ultimo = ultimo -> getProximo();
+    }
+    ultimo -> setProximo(inicio);
+
+    aux -> setProximo(nullptr);
+
+    inicio = aux2;
+
 }
 
 No<int>* ListaEncadeada::getInicio()
