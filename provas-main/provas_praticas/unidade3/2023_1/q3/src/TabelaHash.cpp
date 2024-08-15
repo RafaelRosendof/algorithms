@@ -8,9 +8,78 @@
 #include <string>
 #include <iostream>
 
+
+/*
+//tem um detalhe defeituoso, erro de pointer 
 void TabelaHash::redimensionar(const std::size_t& tamanhoNovo)
 {
+    auto novaTabela = new Par<std::string , std::string>*[tamanhoNovo];
+
+    for(std::size_t i = 0 ; i < tamanhoNovo ; i++)
+    {
+        novaTabela[i] = nullptr;
+    }
+
+    auto tabelaAntiga = this -> tabela;
+    auto tamanhoAntigo = this -> getTamanho();
+
+    //novo tamanho;
+    this -> setTamanho(tamanhoNovo);
+
+    //iniciando nova tabela
+    this -> tabela = novaTabela;
+    this -> quantidade = 0;
+
+    //percorrendo e preenchendo a nova tabela
+    for(std::size_t i = 0 ; i < tamanhoAntigo ; i++){
+        if(tabelaAntiga[i] != nullptr && tabelaAntiga[i]->getChave() != "REMOVIDO"){
+            std::string chave = tabelaAntiga[i] -> getChave();
+            std::string valor = tabelaAntiga[i] -> getValor();
+
+            auto novoIndice = this -> preHash(chave) % tamanhoNovo;
+
+            //sondagem linear
+            while(novaTabela[novoIndice] != nullptr){
+                novoIndice = (novoIndice + 1) % tamanhoNovo;
+            }
+
+            novaTabela[novoIndice] = new Par<std::string , std::string>(chave , valor);
+            this -> quantidade++;
+
+        }
+        delete tabelaAntiga[i];
+    }
+    delete [] tabelaAntiga;
 }
+*/
+
+void TabelaHash::redimensionar(const std::size_t& tamanhoNovo){
+    auto novaTabela = new Par<std::string , std::string>*[tamanhoNovo];
+
+    for(std::size_t i = 0 ; i < tamanhoNovo ; i++){
+        novaTabela[i] = nullptr;
+    }
+
+    for(unsigned long i = 0 ; i < this -> getTamanho() ; i++){
+        auto entry = this -> tabela[i];
+
+        if(entry != nullptr && entry != REMOVIDO){
+            std::string chave = entry->getChave();
+            //unsigned long newHash = this -> preHash(entry -> getChave()) % tamanhoNovo;
+            unsigned long newHash = this->preHash(chave) % tamanhoNovo;
+
+            while(novaTabela[newHash] != nullptr){
+                newHash = (newHash + 1) % tamanhoNovo;
+            }
+            novaTabela[newHash] = entry;
+        }
+    }
+
+    delete[] this -> tabela;
+    this -> tabela = novaTabela;
+    this -> tamanho = tamanhoNovo;
+}
+
 
 TabelaHash::TabelaHash()
 {

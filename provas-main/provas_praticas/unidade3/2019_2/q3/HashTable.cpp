@@ -30,12 +30,35 @@ HashTable::~HashTable()
  Este método deve fazer o reajuste do tamanho do array interno da tabela.
 
  */
+//o teste não funcionou por motivos tecnicos, mas tem uma qustão parecida em 2023_1
 void HashTable::resize(const unsigned long newSize)
 {
-    cout << "ERRO: Método HashTable::resize ainda não foi implementado.\n";
-    abort();
-}
+    auto novaTabela = new HashEntry<std::string, std::string>*[newSize];
+    //Par<std::string , std::string> *novaTabela;
 
+    for(unsigned long i = 0 ; i < newSize ; i++){
+        novaTabela[i] = nullptr;
+    }
+
+    for(unsigned long i = 0 ; i < this -> getSize() ; i++){
+        HashEntry<std::string, std::string> *entry = this -> data[i];
+        if(entry != nullptr && entry != ENTRY_DELETED){
+            //calcula o novo indice 
+            unsigned long newHash = this -> preHash(entry -> getKey()) % newSize;
+
+            while(novaTabela[newHash] != nullptr){
+                newHash = (newHash + 1) % newSize;
+            }
+
+            novaTabela[newHash] = entry;
+        }
+    }
+
+    delete [] this -> data;
+    this -> data = novaTabela;
+    this -> size = newSize;
+    
+}
 /***
  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  !!!!!! NÃO MUDE QUALQUER FUNÇÃO DAQUI PARA BAIXO !!!!!! 

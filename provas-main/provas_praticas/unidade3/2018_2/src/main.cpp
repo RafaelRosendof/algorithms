@@ -14,10 +14,10 @@ int main(int argc, const char * argv[]) {
         assert( testar_Construtor() );
 
         std::cout << "\n\nQUESTÃO 1 - HashTable::put - Inserir\n";
-        // assert( testar_Inserir() );
+         assert( testar_Inserir() );
     
         std::cout << "\n\nQUESTÃO 2 - HashTable::remove - Remover\n";
-        // assert( testar_Remover() );
+         assert( testar_Remover() );
 
         std::cout << "\n\nQUESTÃO 3 - HashTable::resize - Ajustar\n";
         assert( testar_Ajustar() );

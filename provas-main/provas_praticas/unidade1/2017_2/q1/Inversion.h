@@ -1,1 +1,0 @@
-int countInversions(int[], int);

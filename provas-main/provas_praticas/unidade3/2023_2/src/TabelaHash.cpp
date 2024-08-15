@@ -1,9 +1,3 @@
-//
-//  TabelaHash.cpp
-//
-//  Criado por Eiji Adachi Medeiros Barbosa
-//
-
 #include "../include/TabelaHash.h"
 #include <string>
 #include <iostream>
@@ -12,7 +6,7 @@
 bool TabelaHash::inserir(std::string& chave, std::string& valor)
 {
    // Não precisa de redimensionamento dinâmico
-   
+  
    auto hash = this->hash(chave);
 
     int indiceRemovido = -1;
@@ -40,6 +34,8 @@ bool TabelaHash::inserir(std::string& chave, std::string& valor)
         }
     }
     return false;
+
+    
 }
 
 TabelaHash::TabelaHash()

@@ -10,7 +10,31 @@
 
 bool TabelaHash::inserir(std::string& chave, std::string& valor)
 {
-   throw chave == valor;
+    
+    auto indice = this -> hash(chave);
+
+    auto atual = this -> tabela[indice];
+    Par<std::string, std::string>* anterior = nullptr;
+
+    while(atual != nullptr){
+        if(atual -> getChave() == chave){
+            atual -> setValor(valor);
+            return true;
+        }
+        anterior = atual;
+        atual = atual -> getProximo();
+    }
+
+    auto novoPar = new Par<std::string , std::string>(chave , valor);
+    if(anterior == nullptr){
+        this -> tabela[indice] = novoPar;
+    }
+    else{
+        anterior -> setProximo(novoPar);
+    }
+    this -> quantidade++;
+    return true;
+    
 }
 
 TabelaHash::TabelaHash()

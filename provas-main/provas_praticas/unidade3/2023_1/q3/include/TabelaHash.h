@@ -53,6 +53,7 @@ public:
 
     void diminuir();
 
+
     void redimensionar(const std::size_t&);
 };
 

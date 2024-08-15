@@ -15,7 +15,29 @@
  */
 bool TabelaHash::remover(std::string& chave)
 {
-    return chave == "!"; // Remova esta linha e implemente sua própria função!
+    
+    
+/*
+   auto indiceAt = this -> hash(chave);
+                                        //out ++i
+   for(size_t i = 0 ; i < this ->  getTamanho() ; i++){
+    auto indice = (indiceAt + i) % this -> getTamanho();
+    auto atual = this -> tabela[indice];
+
+    if(atual == nullptr){
+        return false;
+    }
+    else if( atual != REMOVIDO && atual -> getChave() == chave ){
+        delete this -> tabela[indice];
+        this -> tabela[indice] = REMOVIDO;
+        --quantidade;
+        return true;
+    }
+
+   }
+
+   return false;
+   */
 }
 
 TabelaHash::TabelaHash()

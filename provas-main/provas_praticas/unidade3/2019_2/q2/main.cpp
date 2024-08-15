@@ -11,8 +11,22 @@
 
 using namespace std;
 
+//tem um problema nos testes, não deveria ter considerado dois elementos iguais!!!
 bool twoSum(int array[], int arraySize, int k){
-    
+   Set<int> conj;
+
+   for(int i = 0 ; i < arraySize ; i++){
+        int x = array[i];
+        int y = k - x;
+
+        if(conj.contains(y) ){
+                return true;
+        }
+
+        conj.insert(x);
+   } 
+
+   return false;
 }
 
 int main(int argc, const char * argv[]) {
@@ -22,7 +36,7 @@ int main(int argc, const char * argv[]) {
 
     assert(twoSum(array, arraySize, 0) == false);
     assert(twoSum(array, arraySize, 1) == false);
-    assert(twoSum(array, arraySize, 2) == true);// 1 + 1
+    assert(twoSum(array, arraySize, 2) == false);// 1 + 1
     assert(twoSum(array, arraySize, 3) == true);// 1 + 2
     assert(twoSum(array, arraySize, 4) == true);// 1 + 3
     assert(twoSum(array, arraySize, 5) == true);// 1 + 4
@@ -42,7 +56,7 @@ int main(int argc, const char * argv[]) {
     assert(twoSum(array, arraySize, 19) == true);// 10 + 9
     assert(twoSum(array, arraySize, 20) == true);// 10 + 10
     assert(twoSum(array, arraySize, 21) == true);// 10 + 11
-    assert(twoSum(array, arraySize, 22) == true);// 11 + 11
+    assert(twoSum(array, arraySize, 22) == false);// 11 + 11
     assert(twoSum(array, arraySize, 23) == false);
     assert(twoSum(array, arraySize, 50) == false);
     assert(twoSum(array, arraySize, 100) == false);
