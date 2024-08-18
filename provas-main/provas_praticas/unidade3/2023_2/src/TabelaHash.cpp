@@ -5,37 +5,35 @@
 
 bool TabelaHash::inserir(std::string& chave, std::string& valor)
 {
-   // Não precisa de redimensionamento dinâmico
-  
-   auto hash = this->hash(chave);
+    auto hash = this->hash(chave);
+    int indiceRe = -1;
+    
+    for(size_t i = 0 ; i < this -> getTamanho(); i++){
+        auto indi = (hash + i) % this -> getTamanho();
 
-    int indiceRemovido = -1;
-    for(size_t delta = 0; delta < this->getTamanho(); delta++)
-    {
-        auto indice = (hash+delta) % this->getTamanho();
+        auto elemento = this -> array[indi];
 
-        auto elemento = this->array[indice];
+        if( elemento == nullptr){
 
-        if(elemento == nullptr)
-        {
-            auto indiceInsercao = indiceRemovido == -1 ? indice : indiceRemovido;
-            this->array[indiceInsercao] = new Par<std::string, std::string>(chave, valor);
-            ++this->quantidade;
-            return true;
+          if(indiceRe == -1){
+            this -> array[indi] = new Par<std::string , std::string>(chave , valor);
+          }
+          else{
+            this -> array[indiceRe] = new Par<std::string , std::string>(chave , valor);
+          }
+          ++this -> quantidade;//ou pode ser ++this
+          return true;
         }
-        else if(elemento == REMOVIDO)
-        {
-            indiceRemovido = indice;
+        else if(elemento == REMOVIDO){
+          indiceRe = indi;
         }
-        else if(elemento->getChave() == chave)
-        {
-            elemento->setValor(valor);
-            return true;
+        else if(elemento -> getChave() == chave){
+
+          elemento -> setValor(valor);
+          return true;
         }
     }
     return false;
-
-    
 }
 
 TabelaHash::TabelaHash()
@@ -150,3 +148,36 @@ void TabelaHash::imprimir()
         }
     }
 }
+
+/*
+   // Não precisa de redimensionamento dinâmico
+  
+   auto hash = this->hash(chave);
+
+    int indiceRemovido = -1;
+    for(size_t delta = 0; delta < this->getTamanho(); delta++)
+    {
+        auto indice = (hash+delta) % this->getTamanho();
+
+        auto elemento = this->array[indice];
+
+        if(elemento == nullptr)
+        {
+            auto indiceInsercao = indiceRemovido == -1 ? indice : indiceRemovido;
+            this->array[indiceInsercao] = new Par<std::string, std::string>(chave, valor);
+            ++this->quantidade;
+            return true;
+        }
+        else if(elemento == REMOVIDO)
+        {
+            indiceRemovido = indice;
+        }
+        else if(elemento->getChave() == chave)
+        {
+            elemento->setValor(valor);
+            return true;
+        }
+    }
+    return false;
+
+*/

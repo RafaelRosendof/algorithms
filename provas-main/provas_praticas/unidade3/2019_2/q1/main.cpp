@@ -12,6 +12,7 @@
 using namespace std;
 
 Dictionary<string, int>* buildMultiSet(string array[], int arraySize){
+    /*
     Dictionary<string, int>* d = new Dictionary<string, int>();
 
     for(unsigned long i = 0; i < arraySize; i++){
@@ -25,6 +26,43 @@ Dictionary<string, int>* buildMultiSet(string array[], int arraySize){
         }
     }
     return d;
+    */
+
+
+
+   auto d = new Dictionary<string , int>();
+
+    for(unsigned long i =0 ; i < arraySize ; i++){
+        string elem = array[i];
+
+        if(d->contains(elem)){
+            int atual = d->get(elem);
+            d->put(elem, atual + 1);
+        }
+        else{
+            d->put(elem, 1);
+        }
+    }
+    return d;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 int main(int argc, const char * argv[]) {
