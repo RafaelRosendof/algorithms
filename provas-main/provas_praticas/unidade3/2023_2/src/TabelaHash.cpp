@@ -5,6 +5,92 @@
 
 bool TabelaHash::inserir(std::string& chave, std::string& valor)
 {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+  auto hash = this -> hash(chave);
+
+  int indiceRe = -1;
+
+  for(size_t i = 0 ; i < this -> getTamanho() ; i++){
+    auto indice = (hash + i) % this -> getTamanho();
+    auto atual = this -> array[indice];
+
+    if(atual == nullptr){
+
+      if(indiceRe == -1){
+        this -> array[indice] = new Par<std::string , std::string>(chave , valor);
+      }
+      else{
+        this -> array[indiceRe] = new Par<std::string , std::string>(chave , valor);
+      }
+      this -> quantidade++;
+      return true;
+    }
+
+    else if(atual == REMOVIDO){indiceRe = indice; }
+
+    else if (atual -> getChave() == chave) {
+      atual -> setValor(valor);
+      return true;
+    }
+  }
+  return false;
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*
     auto hash = this->hash(chave);
     int indiceRe = -1;
     
@@ -34,6 +120,7 @@ bool TabelaHash::inserir(std::string& chave, std::string& valor)
         }
     }
     return false;
+    */
 }
 
 TabelaHash::TabelaHash()

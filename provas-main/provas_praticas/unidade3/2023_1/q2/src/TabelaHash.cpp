@@ -16,8 +16,82 @@
 bool TabelaHash::remover(std::string& chave)
 {
     
-    
+
+  auto hash = this -> hash(chave);
+  for(size_t i = 0 ; i < this -> getTamanho() ; i++){
+    auto indice = (hash + i) % this -> getTamanho();
+    auto elem = this -> tabela[indice];
+
+    if(elem == nullptr){return false;}
+
+    else if(elem != REMOVIDO && elem -> getChave() == chave ){
+      delete this -> tabela[indice];
+      this -> tabela[indice] = REMOVIDO;
+      this -> quantidade--;
+      return true;
+    }
+  }
+  return true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
+
+
+  auto hash = this -> hash(chave);
+
+  for(size_t i = 0 ; i < this -> getTamanho() ; i++){
+    auto indice = (hash + i) % this -> getTamanho();
+    auto atual = this -> tabela[indice];
+
+    if(atual == nullptr){return false;}
+
+    else if(atual != REMOVIDO && atual -> getChave() == chave){
+      delete this -> tabela[indice];
+      this -> tabela[indice] = REMOVIDO;
+      this -> quantidade--;
+      return true;
+    }
+  }
+
+  return false;
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*
+
    auto indiceAt = this -> hash(chave);
                                         //out ++i
    for(size_t i = 0 ; i < this ->  getTamanho() ; i++){
@@ -37,7 +111,7 @@ bool TabelaHash::remover(std::string& chave)
    }
 
    return false;
-   */
+  */ 
 }
 
 TabelaHash::TabelaHash()

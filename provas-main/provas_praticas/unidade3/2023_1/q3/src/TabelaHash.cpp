@@ -9,51 +9,38 @@
 #include <iostream>
 
 
-/*
-//tem um detalhe defeituoso, erro de pointer 
-void TabelaHash::redimensionar(const std::size_t& tamanhoNovo)
-{
-    auto novaTabela = new Par<std::string , std::string>*[tamanhoNovo];
-
-    for(std::size_t i = 0 ; i < tamanhoNovo ; i++)
-    {
-        novaTabela[i] = nullptr;
-    }
-
-    auto tabelaAntiga = this -> tabela;
-    auto tamanhoAntigo = this -> getTamanho();
-
-    //novo tamanho;
-    this -> setTamanho(tamanhoNovo);
-
-    //iniciando nova tabela
-    this -> tabela = novaTabela;
-    this -> quantidade = 0;
-
-    //percorrendo e preenchendo a nova tabela
-    for(std::size_t i = 0 ; i < tamanhoAntigo ; i++){
-        if(tabelaAntiga[i] != nullptr && tabelaAntiga[i]->getChave() != "REMOVIDO"){
-            std::string chave = tabelaAntiga[i] -> getChave();
-            std::string valor = tabelaAntiga[i] -> getValor();
-
-            auto novoIndice = this -> preHash(chave) % tamanhoNovo;
-
-            //sondagem linear
-            while(novaTabela[novoIndice] != nullptr){
-                novoIndice = (novoIndice + 1) % tamanhoNovo;
-            }
-
-            novaTabela[novoIndice] = new Par<std::string , std::string>(chave , valor);
-            this -> quantidade++;
-
-        }
-        delete tabelaAntiga[i];
-    }
-    delete [] tabelaAntiga;
-}
-*/
+//cria tabela
+//inicializa tudo com nullptr
+//coloca os elementos na tabela nova 
+//se for nullptr ou REMOVIDO continue até ser ok 
+//delete tudo e atualize o tamanho e a tabela
 
 void TabelaHash::redimensionar(const std::size_t& tamanhoNovo){
+
+
+    auto novaTab = new Par<std::string , std::string>*[tamanhoNovo];
+    for(std::size_t i = 0 ; i < tamanhoNovo ; i++){
+        novaTab[i] = nullptr;
+    }
+
+    for(unsigned long i = 0 ; i < this -> getTamanho() ; i++){
+        auto elem = this -> tabela[i];
+
+        if(elem != nullptr && elem != REMOVIDO){
+            std::string chave = elem -> getChave();
+            auto indice = this -> preHash(chave) % tamanhoNovo;
+
+            while(novaTab[indice] != nullptr){
+                indice = (indice + 1) % tamanhoNovo;
+            }
+            novaTab[indice] = elem;
+        }
+    }
+
+    delete [] this -> tabela;
+    this -> tabela = novaTab;
+    this -> tamanho = tamanhoNovo;
+/*
     auto novaTabela = new Par<std::string , std::string>*[tamanhoNovo];
 
     for(std::size_t i = 0 ; i < tamanhoNovo ; i++){
@@ -78,6 +65,7 @@ void TabelaHash::redimensionar(const std::size_t& tamanhoNovo){
     delete[] this -> tabela;
     this -> tabela = novaTabela;
     this -> tamanho = tamanhoNovo;
+    */
 }
 
 
