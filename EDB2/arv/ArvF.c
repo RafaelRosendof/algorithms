@@ -13,6 +13,7 @@ int altura_arv(struct Arv *arv)
 bool remove_arv(struct Arv *arv, char c)
 
 */
+typedef struct Arv Arv;
 
 struct Arv *cria_arv_vazia(){
     return NULL;
@@ -71,3 +72,47 @@ void imprime_larg(struct Arv *arv){
 
     return; //TODO
 }
+
+bool insere_arv(Arv *arv, char c){
+
+    if(arv == NULL){return false;}
+
+
+    Arv *novo_no = cria_no(c);
+
+    if(novo_no == NULL){return false;}
+
+    arv -> num_filhos++;
+
+//realocar o array de gilhos para adicionar o novo nó
+    Arv **aux = (Arv**)realloc(arv -> filhos, arv -> num_filhos * sizeof(Arv*));
+
+    if(aux == NULL){
+        printf("Erro na alocação de memória\n");
+        free(novo_no);
+        arv -> num_filhos--;
+        return false;
+    }
+
+    arv -> filhos = aux;
+    arv -> filhos[arv -> num_filhos - 1] = novo_no;
+
+    return true;
+}
+
+bool pertence(Arv *arv , char c){
+    if(arv == NULL){return false;}
+
+    if(arv -> info == c){printf("Elemento encontrado \n"); return true;}
+
+    for(int i = 0 ; i < arv -> num_filhos ; i++){
+        if(pertence(arv -> filhos[i], c)){
+            return true;
+        }
+    }
+
+    printf("Elemento não encontrado\n");
+    return false; 
+}
+
+
