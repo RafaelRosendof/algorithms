@@ -115,4 +115,45 @@ bool pertence(Arv *arv , char c){
     return false; 
 }
 
+int altura_arv(Arv *arv){
+    if(arv == NULL){return 0;}
+
+    int altura = 0;
+
+    for(int i = 0; i < arv -> num_filhos; i++){
+        int h = altura_arv(arv -> filhos[i]);
+        if(h > altura){
+            altura = h;
+        }
+    }
+
+    return altura + 1;
+}
+
+bool remove_node(Arv *arv , char c){
+    if(arv == NULL) {
+        printf("Arvore vazia\n");
+        return false;
+    }
+
+    for(int i = 0 ; i < arv -> num_filhos ; i++){
+        if(arv -> filhos[i] -> info == c){
+            
+            num_filhos--;
+            free(arv -> filhos[i]);
+            return true;
+        }
+
+        for(int j = i; j < arv -> num_filhos - 1; j++){
+            arv -> filhos[j] = arv -> filhos[j + 1];
+        }
+
+        arv -> filhos = (Arv**)realloc(arv -> filhos, arv -> num_filhos * sizeof(Arv*));
+
+
+    }
+    return false;
+
+}
+
 

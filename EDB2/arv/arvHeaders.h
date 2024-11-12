@@ -24,7 +24,7 @@ void imprime_arvPosOrdem(struct Arv *arv);
 void imprime_larg(struct Arv *arv);
 bool pertence(struct Arv *arv, char c);
 int altura_arv(struct Arv *arv);
-bool remove_arv(struct Arv *arv, char c);
+bool remove_node(struct Arv *arv, char c);
 
 #endif // ARVHEADERS_H
 
