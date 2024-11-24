@@ -91,7 +91,7 @@ void arvore_imprimePosOrdem(Arvore *raiz){
 }
 
 
-void *arvore_busca(Arvore *raiz , const char genero[]){
+void arvore_buscaPorGenero(Arvore *raiz , const char genero[]){
     if (raiz == NULL) {
         return;
     }
@@ -107,8 +107,8 @@ void *arvore_busca(Arvore *raiz , const char genero[]){
         printf("Número de Páginas: %d\n\n", raiz->livro.numPaginas);
     }
 
-    buscar_por_genero(raiz->esq, genero);
-    buscar_por_genero(raiz->dir, genero);
+    arvore_buscaPorGenero(raiz->esq, genero);
+    arvore_buscaPorGenero(raiz->dir, genero);
 }
 
 bool arvore_pertence(Arvore * raiz , int codigo){
@@ -178,8 +178,45 @@ bool removeNo(Arvore **raiz, int codigo) {
             aux = aux -> esq;
         }
         (*raiz) -> livro = aux -> livro;
-        return arvore_removeNo(&(*raiz) -> dir , aux -> livro.codigo);
+        return removeNo(&(*raiz) -> dir , aux -> livro.codigo);
     }
+
+}
+
+Arvore *carregarCSV(const char *nomeArq , Arvore *raiz){
+    FILE * arq = fopen(nomeArq , "r");
+
+    if(!arq){
+        printf("Erro ao abrir o arquivo\n");
+        return NULL;
+    }
+
+    char linha[1000];
+    int first = 1; 
+
+    while(fgets(linha , sizeof(linha) , arq)){
+        if(first){ 
+            first = 0;
+            continue;
+        }
+
+        No livro;
+        //expressões regulares para pegar os dados do csv
+        sscanf(
+            linha , "%d,%99[^,],%99[^,],%49[^,],%d,%99[^,],%d",
+               &livro.codigo,
+               livro.titulo,
+               livro.autor,
+               livro.genero,
+               &livro.ano,
+               livro.editora,
+               &livro.numPaginas        
+        );
+
+        raiz = arvore_insere(raiz , livro);
+    }
+    fclose(arq);
+    return raiz;
 }
 
 

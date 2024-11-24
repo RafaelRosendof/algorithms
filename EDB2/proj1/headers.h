@@ -1,10 +1,6 @@
 #ifndef HEADERS_H
 #define HEADERS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,7 +49,7 @@ void arvore_imprimePosOrdem(Arvore* raiz);//feito
 
 int arvore_altura(Arvore* raiz); //feito
 
-bool arvore_removeNo(Arvore** raiz, int codigo); //feito
+bool removeNo(Arvore** raiz, int codigo); //feito
 
 Arvore* carregarCSV(const char* nomeArquivo, Arvore* raiz); //TODO
 
