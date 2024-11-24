@@ -139,7 +139,7 @@ bool remove_node(Arv *arv , char c){
     for(int i = 0 ; i < arv -> num_filhos ; i++){
         if(arv -> filhos[i] -> info == c){
             
-            num_filhos--;
+            //num_filhos--;
             free(arv -> filhos[i]);
             return true;
         }
