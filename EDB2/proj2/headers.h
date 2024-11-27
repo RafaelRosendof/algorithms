@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-
+#define HEAP_MAX 1000
 
 typedef struct No No;
 typedef struct Heap Heap;
@@ -17,35 +17,37 @@ struct No {
     int tipo;                // 0 decolagem 1 pouso
     int emergencia;         // 0 não 1 sim
     int prioridade;         // base de calculo
-    No *filho1;
-    No *filho2;
+    //No *filho1;
+    //No *filho2;
 };
 
 
 struct Heap {
-    No *avioes[];
+    No **avioes;
     int tamanho;
     int capacidade;
-    Heap *proximo; // pode fazer isso?
+
 };
 
-bool inserir_aeronave(Heap *heap , No *aeronave);
-bool remove_aeronave(Heap *heap , char identificador[]);
-bool heap_vazia(Heap *heap);
-bool atualizar_prioridade(Heap *heap , char identificador[] , int nova_prioridade);
+bool inserir_aeronave(Heap *heap , No *aeronave); //FEITO
+bool remove_aeronave(Heap *heap , char identificador[]);//FEITO
+bool heap_vazia(Heap *heap);//FEITO
+bool atualizar_prioridade(Heap *heap , char identificador[]);
 bool remover_maior_prioridade(Heap *heap);
 
-int calculo_prioridade(No *aeronave);
+int calculo_prioridade(No *aeronave); //FEITO
 
-No *consultar_maior_prioridade(Heap *heap);
+No *consultar_maior_prioridade(Heap *heap); //vou retornar o índice
 
-void printa_node(No* node);
-void printa_heap(Heap *heap);
-void printa_node_identificador(Heap *heap , char identificador[]);
-void libera_heap(Heap *heap);
+void heapify_up(Heap *heap , int i); //FEITO
+void heapify_down(Heap *heap , int i); //FEITO
+void printa_node(No* node); //FEITO
+void printa_heap(Heap *heap);//FEITO
+void printa_node_identificador(Heap *heap , char identificador[]);//FEITO
+void libera_heap(Heap *heap);//FEITO
 
-Heap *cria_heap_vazia();
-Heap *carrega_csv(const char *nomeArq , Heap *heap);
+Heap *cria_heap_vazia();//FEITO
+Heap *carrega_csv(const char *nomeArq , Heap *heap);//FEITO
 
 
 
