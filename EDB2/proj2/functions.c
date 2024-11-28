@@ -1,5 +1,6 @@
 #include "headers.h"
 #include <stdio.h>
+#include <string.h>
 
 Heap *cria_heap_vazia(){
     Heap *heap = (Heap *) malloc(sizeof(Heap));
@@ -58,7 +59,7 @@ void printa_node(No *node){
     printf("Identificador: %s , Combustível: %d , Minutos %ld , Tipo: %d , Emergência %d , Prioridade %d",node -> identificador , node -> combustivel , node -> minutos , node -> tipo , node -> emergencia , node -> prioridade);;
 }
 
-void printa_node_indentificador(Heap *heap , char identificador[]){
+void printa_UnicoNode(Heap *heap , char identificador[]){
     if(heap == NULL || heap -> tamanho == 0){
         printf("HEAP VAZIA !!!!");
         return;
@@ -71,6 +72,7 @@ void printa_node_indentificador(Heap *heap , char identificador[]){
         }
     }
     printf("AERONAVE NÃO ENCONTRADA ");
+    return;
 }
 
 void libera_heap(Heap *heap){
@@ -173,78 +175,116 @@ bool remover_maior_prioridade(Heap *heap){
     return true;
 }
 
-bool atualizar_prioridade(Heap *heap, char identificador[]){
-/*
-bool atualizar_prioridade(Heap *heap, char identificador[], int nova_prioridade) {
-    if (heap == NULL || heap->tamanho == 0) return false;
+bool pertence_heap(Heap *heap, char identificador[]){
+    if(heap == NULL || heap -> tamanho == 0){
+        printf("HEAP VAZIA OU NULA  ");
+        return false;
+    }
 
-    for (int i = 0; i < heap->tamanho; i++) {
-        if (strcmp(heap->avioes[i]->identificador, identificador) == 0) {
-            int prioridade_antiga = heap->avioes[i]->prioridade;
-            heap->avioes[i]->prioridade = nova_prioridade;
-
-            // Se a prioridade aumentou, sobe
-            if (nova_prioridade > prioridade_antiga) {
-                heapify_up(heap, i);
-            } else {  // Se a prioridade diminuiu, desce
-                heapify_down(heap, i);
-            }
-
+    for(int i = 0 ; i < heap -> tamanho ; i++){
+        if(strcmp(heap -> avioes[i] -> identificador, identificador)== 0){
+            printf("\n\n ACHOU O ELEMENTO !!!! %d", i);
             return true;
         }
     }
-    printf("Aeronave não encontrada!\n");
+    printf("Elemento não existe na heap com esse identificador %s",identificador);
     return false;
 }
 
-*/
-if(heap == NULL || heap -> tamanho == 0){
-    printf("HEAP VAZIA, IMPOSSÍVEL ATUALIZAR A PRIORIDADE");
-    return false;
+void ordena_heap(Heap *heap) {
+    if (heap == NULL || heap->tamanho == 0) {
+        printf("Heap vazia ou nula, impossível ordenar.\n");
+        return;
+    }
+
+    for (int i = (heap->tamanho - 2) / 2; i >= 0; i--)  {
+        heapify_down(heap, i);
+    }
 }
 
-No *aeronave = consulta_aeronave(heap, identificador);
+No *consulta_aeronave(Heap *heap , char identificador[]){
+    if(heap == NULL || heap -> tamanho == 0){
+        printf("HEAP VAZIA OU NÃO INICIALIZADA");
+        return NULL;
+    }
 
-printf("\nEscolha o parâmetro que queres atualizar (1) Combustivel\n");
-printf("\nEscolha o parâmetro que queres atualizar (2) Minutos\n");
-printf("\nEscolha o parâmetro que queres atualizar (3) Tipo\n");
-printf("\nEscolha o parâmetro que queres atualizar (4) Emergência\n");
+    for(int i = 0 ; i < heap -> tamanho ; i++){
+        if(strcmp(heap -> avioes[i] -> identificador, identificador) == 0){
+            return heap -> avioes[i];
+        }
+    }
 
-printf("\n\nEscolha a sua resposta: ");
-
-int choice;
-
-scanf("%d",&choice);
-
-switch (choice) {
-    case choice == 1:
-        printf("\n Qual o novo combustível: ");
-        int new_c = scanf("%d",&new_c);
-        aeronave ->combustivel = new_c;
-
-    case choice == 2:
-        printf("\n Qual os minutos: ");
-        long new_c = scanf("%ld",&new_c);
-        aeronave ->minutos = new_c;
-
-    case choice == 3:
-        printf("\n Qual o novo tipo: ");
-        int new_c = scanf("%d",&new_c);
-        aeronave ->tipo = new_c;
-
-    case choice == 4:
-        printf("\n Tem emergência? 0 não 1 sim: ");
-        int new_c = scanf("%d",&new_c);
-        aeronave ->emergencia = new_c;
-
-
+    printf("Node não encontrado pela busca");
+    return NULL;
 }
 
-atualizar_prioridade(heap, identificador);
+bool atualizar_prioridade(Heap *heap, char identificador[]) {
+    if (heap == NULL || heap->tamanho == 0) {
+        printf("HEAP VAZIA, IMPOSSÍVEL ATUALIZAR A PRIORIDADE\n");
+        return false;
+    }
 
+    if (!pertence_heap(heap, identificador)) {
+        printf("Elemento não encontrado na HEAP\n");
+        return false;
+    }
 
+    No *aeronave = consulta_aeronave(heap, identificador);
+    if (aeronave == NULL) {
+        printf("Erro ao consultar a aeronave\n");
+        return false;
+    }
+
+    printf("\nEscolha o parâmetro que quer atualizar:\n");
+    printf("(1) Combustível\n");
+    printf("(2) Minutos\n");
+    printf("(3) Tipo\n");
+    printf("(4) Emergência\n");
+    printf("\nEscolha: ");
+
+    int escolha;
+    scanf("%d", &escolha);
+
+    switch (escolha) {
+        case 1: {
+            printf("Novo combustível: ");
+            int novo_combustivel;
+            scanf("%d", &novo_combustivel);
+            aeronave->combustivel = novo_combustivel;
+            break;
+        }
+        case 2: {
+            printf("Novos minutos: ");
+            long novos_minutos;
+            scanf("%ld", &novos_minutos);
+            aeronave->minutos = novos_minutos;
+            break;
+        }
+        case 3: {
+            printf("Novo tipo: ");
+            int novo_tipo;
+            scanf("%d", &novo_tipo);
+            aeronave->tipo = novo_tipo;
+            break;
+        }
+        case 4: {
+            printf("Emergência? (0 = não, 1 = sim): ");
+            int nova_emergencia;
+            scanf("%d", &nova_emergencia);
+            aeronave->emergencia = nova_emergencia;
+            break;
+        }
+        default:
+            printf("Escolha inválida.\n");
+            return false;
+    }
+
+    // Recalcula a prioridade e reorganiza a heap
+    aeronave->prioridade = calculo_prioridade(aeronave);
+    ordena_heap(heap); // Pode ser otimizado se souber o índice
+
+    return true;
 }
-
 
 
 bool heap_vazia(Heap *heap){

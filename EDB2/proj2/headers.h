@@ -34,6 +34,8 @@ bool remove_aeronave(Heap *heap , char identificador[]);//FEITO
 bool heap_vazia(Heap *heap);//FEITO
 bool atualizar_prioridade(Heap *heap , char identificador[]);//FEITO
 bool remover_maior_prioridade(Heap *heap); //FEITO
+bool pertence_heap(Heap *heap , char identificador[]); //FEITO
+
 
 int calculo_prioridade(No *aeronave); //FEITO
 
@@ -41,12 +43,12 @@ No *consultar_maior_prioridade(Heap *heap); //vou retornar o índice
 
 No *consulta_aeronave(Heap *heap , char identificador[]);
 
-void ordena_heap(Heap *heap)//usando o heapify up
+void ordena_heap(Heap *heap);//usando o heapify up
 void heapify_up(Heap *heap , int i); //FEITO
 void heapify_down(Heap *heap , int i); //FEITO
 void printa_node(No* node); //FEITO
 void printa_heap(Heap *heap);//FEITO
-void printa_node_identificador(Heap *heap , char identificador[]);//FEITO
+void printa_UnicoNode(Heap *heap , char identificador[]);//FEITO
 void libera_heap(Heap *heap);//FEITO
 
 Heap *cria_heap_vazia();//FEITO
