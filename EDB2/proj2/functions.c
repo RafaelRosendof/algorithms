@@ -147,8 +147,8 @@ bool remove_aeronave(Heap *heap , char identificador[]){
     for(int i = 0 ; i < heap -> tamanho ; i++){
         if(strcmp(heap -> avioes[i] -> identificador , identificador ) == 0){
             free(heap -> avioes[i]);
-
-            for(int j = i ; j < heap -> tamanho - i ; j++){
+            //ou - i
+            for(int j = i ; j < heap -> tamanho - 1 ; j++){
                 heap -> avioes[j] = heap -> avioes[j + 1];
             }
 
@@ -198,6 +198,51 @@ bool atualizar_prioridade(Heap *heap, char identificador[], int nova_prioridade)
 }
 
 */
+if(heap == NULL || heap -> tamanho == 0){
+    printf("HEAP VAZIA, IMPOSSÍVEL ATUALIZAR A PRIORIDADE");
+    return false;
+}
+
+No *aeronave = consulta_aeronave(heap, identificador);
+
+printf("\nEscolha o parâmetro que queres atualizar (1) Combustivel\n");
+printf("\nEscolha o parâmetro que queres atualizar (2) Minutos\n");
+printf("\nEscolha o parâmetro que queres atualizar (3) Tipo\n");
+printf("\nEscolha o parâmetro que queres atualizar (4) Emergência\n");
+
+printf("\n\nEscolha a sua resposta: ");
+
+int choice;
+
+scanf("%d",&choice);
+
+switch (choice) {
+    case choice == 1:
+        printf("\n Qual o novo combustível: ");
+        int new_c = scanf("%d",&new_c);
+        aeronave ->combustivel = new_c;
+
+    case choice == 2:
+        printf("\n Qual os minutos: ");
+        long new_c = scanf("%ld",&new_c);
+        aeronave ->minutos = new_c;
+
+    case choice == 3:
+        printf("\n Qual o novo tipo: ");
+        int new_c = scanf("%d",&new_c);
+        aeronave ->tipo = new_c;
+
+    case choice == 4:
+        printf("\n Tem emergência? 0 não 1 sim: ");
+        int new_c = scanf("%d",&new_c);
+        aeronave ->emergencia = new_c;
+
+
+}
+
+atualizar_prioridade(heap, identificador);
+
+
 }
 
 
