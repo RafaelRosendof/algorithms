@@ -151,8 +151,8 @@ bool remove_aeronave(Heap *heap , char identificador[]){
             free(heap -> avioes[i]);
             //ou - i
             for(int j = i ; j < heap -> tamanho - 1 ; j++){
-                heap -> avioes[j] = heap -> avioes[j + 1];
-            }
+                heap -> avioes[j] = heap -> avioes[j + 1]; // todos avançam?
+            }                                              //como explicar
 
             heap -> tamanho--;
 
@@ -197,7 +197,7 @@ void ordena_heap(Heap *heap) {
         return;
     }
 
-    for (int i = (heap->tamanho - 2) / 2; i >= 0; i--)  {
+    for (int i = (heap->tamanho - 2) / 2; i >= 0; i--)  { //explicar melhor esse for
         heapify_down(heap, i);
     }
 }
