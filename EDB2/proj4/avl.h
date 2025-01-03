@@ -26,13 +26,12 @@ tree * arv_insereAVL(tree* raiz , No node);
 tree * arv_criaNo(No node); //feito
 tree * rotacaoDireita(tree* raiz);
 tree * rotacaoEsquerda(tree* raiz);
+tree * rotacaoDuplaDireita(tree* raiz);
+tree * rotacaoDuplaEsquerda(tree* raiz);
 
 char * arv_busca(tree* raiz , char * palavra); //feito
-//tree * rotacaoDuplaDireita(tree* raiz);
-//tree * rotacaoDuplaEsquerda(tree* raiz);
 
 void arv_libera(tree* raiz); //feito
-
 void imprimeAlfabetico(tree * raiz); //feito
 
 int arv_altura(tree * raiz); //feito

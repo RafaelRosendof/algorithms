@@ -12,4 +12,4 @@ void inserir_palavraTrie(char * palavra);
 void inserir_palavraAVL(char * palavra);
 bool buscar_palavras(Trie * raiz , char tabuleiro[100][100]);
 
-void imprimir_resultados(); //-> função para exibir as palavras encontradas, armazenadas na AVL
+void imprimir_resultados(); 
