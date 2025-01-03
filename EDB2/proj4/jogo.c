@@ -19,7 +19,7 @@ void iniciar_arvores(){
 }
 
 void inserir_palavraTrie(char * palavra){
-    raizTrie = insereTrie(raizTrie , palavra);
+    raizTrie = insereTrie(raizTrie , palavra); //colocar a insereTrie como tree ou mudar a lógica aqui 
 }
 
 //Somente caso seja validado na trie
