@@ -17,16 +17,16 @@ struct Trie{
 
 //funções 
 
-Trie * criaNo();
+Trie * criaNo(char * palavra); //feito
 
-void insereTrie(Trie * raiz , char * palavra);
+void insereTrie(Trie * raiz , char * palavra); //feito
 
-bool buscaTrie(Trie * raiz , char *palavra);
+bool buscaTrie(Trie * raiz , char *palavra); //feito
 
-void imprimeTrie(Trie * raiz , char * palavra , int pos);
+void imprimeTrie(Trie * raiz , char * palavra , int pos); //feito
 
-void liberaTrie(Trie * raiz);
+void liberaTrie(Trie * raiz); //feito
 
-bool verificaTrie(Trie * raiz , char * palavra);
+char * verificaTrie(Trie * raiz , char * palavra); //feito
 
 #endif //TRIE_H

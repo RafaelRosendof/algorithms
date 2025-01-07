@@ -9,11 +9,11 @@
 
 extern char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE];
 
-void iniciar_arvores();
-bool ler_palavras(char * file);
-bool ler_tabuleiro(char * file);
-void inserir_palavraTrie(char * palavra);
-void inserir_palavraAVL(char * palavra);
+void iniciar_arvores(); //feito
+bool ler_palavras(char * file); //feito
+bool ler_tabuleiro(char * file); //feito
+void inserir_palavraTrie(char * palavra); //feito
+void inserir_palavraAVL(char * palavra);  ////feito
 bool buscar_palavras(Trie * raiz , char * tabuleiro);
 
-void imprimir_resultados(); 
+void imprimir_resultados(); //feito

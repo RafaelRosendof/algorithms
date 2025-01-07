@@ -19,14 +19,14 @@ void iniciar_arvores(){
 }
 
 void inserir_palavraTrie(char * palavra){
-    raizTrie = insereTrie(raizTrie , palavra); //colocar a insereTrie como tree ou mudar a lógica aqui 
+    insereTrie(raizTrie , palavra); //colocar a insereTrie como tree ou mudar a lógica aqui 
 }
 
 //Somente caso seja validado na trie
 void inserir_palavraAVL(char * palavra){
     No node;
     strcpy(node.palavra , palavra);
-    raizAVL = arv_insereAVL(raizAVL , node);
+    raizAVL = arv_insereAVL(raizAVL , palavra);
 }
 
 bool ler_palavras(char * file){
