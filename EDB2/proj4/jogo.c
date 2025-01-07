@@ -22,6 +22,7 @@ void inserir_palavraTrie(char * palavra){
     insereTrie(raizTrie , palavra); //colocar a insereTrie como tree ou mudar a lógica aqui 
 }
 
+//INCOMPLETO -> FALTA VALIDAR NA TRIE 
 //Somente caso seja validado na trie
 void inserir_palavraAVL(char * palavra){
     No node;
@@ -78,4 +79,17 @@ bool ler_tabuleiro(char * file){
 
 void imprimir_resultados(){
     imprimeAlfabetico(raizAVL);
+}
+
+void fluxoJogo(char * tabuleiro , char * palavras){
+
+    ler_palavras(palavras);
+    ler_tabuleiro(tabuleiro);
+
+    iniciar_arvores();
+
+    buscar_palavras(raizTrie , tabuleiro);
+
+    imprimir_resultados();
+
 }

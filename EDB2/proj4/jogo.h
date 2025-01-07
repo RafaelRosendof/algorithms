@@ -17,3 +17,5 @@ void inserir_palavraAVL(char * palavra);  ////feito
 bool buscar_palavras(Trie * raiz , char * tabuleiro);
 
 void imprimir_resultados(); //feito
+
+void fluxoJogo(char * tabuleiro , char * palavras);
