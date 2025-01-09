@@ -1,67 +1,127 @@
 #include <stdio.h>
+#include<math.h>
 
+int fun1(int a){
 
-void printaValor(int a , int b){
+    printf("Digite um número: ");
+    scanf("%d" , &a);
 
-  printf("\n %d %d " , a , b);
+    int quad = a * a;
+
+    return quad;
+}
+
+float fun2(float alt , float peso){
+
+    printf("Solicito a altura e o peso, respectivamente: ");
+    scanf("%f %f", &alt , &peso);
+
+    float imc = peso / (alt * alt);
+
+    if( imc >70.0){
+        printf("MORTE!!!!!!");
+        return imc;
+    }
+    else if (imc < 70.0 && imc > 30.0) {
+        printf("GORDÃOOOOO!!!! ");
+        return imc;
+    }
+    else if (imc < 30.0 && imc > 19.0) {
+        printf("FEZ O MÍNIMO   ");
+        return imc;
+    }
+    else {
+       printf("NINGUEM LIGA ");
+      return imc;
+    }
+
 
 }
 
 
- // Aqui é um comentário dando // 
+double x2(double a , double b, double c ){
+    printf("Digite o a depois o b depois o C: ");
+    scanf("%lf %lf %lf", &a , &b , &c);
+
+    double delta = (b*b) - (4 *a*c);
+    double d2 = sqrt(delta);
+    double x1 = (-b + d2) / (2 * a);
+
+    return x1;
+}
+
+int fun4(int i){
+
+    if(i == -1){return -1;}
+
+    printf("fala figas %d \n",i);
+    return fun4(i--);
+}
+
+
 int main(){
 
-  printf("A linguagem mais usada no mundo \n");
+    //int a;
+    //a = fun1(a);
 
-  int var = 10;
+    //printf("o quadrado foi %d", a);
 
-  float var1 = 10.25;
+    //printf("\n\n\n\n\n\n função 2");
 
-  //char s = "d";
+    //float alt , peso;
 
-  char s [] = "olá mundo";
-  //
+    //fun2(alt , peso);
 
-  printf("%d e %f  e %s" , var , var1 , s);
-
-
-  int var3 = 7256;
-  int var4 = 28554;
-
-  //quebra de linha 
-  printf("\n\n\n");
-
-  int var5 = var3 * var4; 
-
-  printf("%d",var5);
+    //double a,b,c;
+    //double val = x2( a,  b,  c);
 
 
+    //printf("Valor da raiz foi %lf: ", val);
 
-  int var6;
+    for(int i = 0 ; i < 1000 ; i++){
+        printf("fala figas %d \n",i);
+    }
 
-  printf("\n Digite o valor agora: ");
-  scanf("%d", &var6);
- 
-  int var7 =  var5 / var6;
+    for(int i = 1000 ; i > 0 ; i--){
+        printf("fala figas %d \n",i);
+    }
 
-  printf("\n valor resultante é : %d " , var7);
+    int def = 1000;
 
-  printaValor(10 , 20);
+    while(def > 0){
+        printf("fala figas %d \n",def);
+        def--;
+    }
 
-  /*
-   * 1 ATIVIDADE fazer um código que recebe um número e faz o quadrado dele;
-   *
-   * 2 ATIVIDA fazer um c´odigo que receber a altura e o peso e vai retornar o IMC;
-   *
-   * 3 ATIVIDADE fazer um código que vai receber uma equação quadrática ( 4 , 10 , 20) retornar só o x1;
-   *
-   *
-   * Caso fique em dúvida, proxima aula tem arrays loops e condições 
-   */
+    do {
 
-  return 0;
+        printf("fala figas %d \n",def);
+        def--;
+    }while (def > 0);
 
+    fun4(def);
 
-
+    return 0;
 }
 
+/*
+
+for
+
+while
+
+do while
+
+recursão
+
+
+
+EX1 = a soma dos números divisiveis por 3 do 0 ao 1 milhão
+
+EX2 = Criar um sistema para saber se o aluno passou por média (aprovado por nota =5 ) aprovado = 7, se tirar uma nota abaixo de 3 média vai para 21,a reposiçaõ a média é 14
+duas maiores notas
+
+EX3 = Jogo de adivinhar números dado um número de 0 a 100 tem que adivinhar o número e avisar se é maior ou menor e tem que ter as vidas e os níveis
+
+
+*/

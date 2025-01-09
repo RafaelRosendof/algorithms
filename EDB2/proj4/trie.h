@@ -15,9 +15,9 @@ struct Trie{
     bool folha;
 };
 
-//funções 
+//funções
 
-Trie * criaNo(char * palavra); //feito
+Trie * criaNo(); //feito
 
 void insereTrie(Trie * raiz , char * palavra); //feito
 

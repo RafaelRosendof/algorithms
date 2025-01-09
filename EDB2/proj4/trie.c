@@ -1,8 +1,8 @@
 #include "trie.h"
 
 
-//Revisar aqui 
-Trie * criaNo(char * palavra){
+//Revisar aqui
+Trie * criaNo(){
     Trie *no = (Trie *) malloc(sizeof(Trie));
 
     if(no == NULL){
@@ -10,14 +10,15 @@ Trie * criaNo(char * palavra){
         exit(1);
     }
 
-    no -> folha = false;
+    no -> folha = false; //não folha
     for(int i = 0 ; i < TAM_ALFABETO ; i++){
-        no -> filhos[i] = NULL;
+        no -> filhos[i] = NULL; //todos as letras ou filhos como nones
     }
 
     return no;
 }
 
+//retornar palavra na trie
 char * verificaTrie(Trie * raiz , char * palavra){
     if (raiz == NULL){
         printf("Trie vazia\n");
@@ -27,21 +28,22 @@ char * verificaTrie(Trie * raiz , char * palavra){
     Trie * aux = raiz;
 
     for(int i = 0; i < strlen(palavra); i++){
-        int index = palavra[i] - 'a';
+        int index = palavra[i] - 'a'; //varrendo as palavras
 
         if(aux -> filhos[index] == NULL){
-            return NULL;
+            return NULL; //caminho inexistente -> proxima letra não existe
         }
 
-        aux = aux -> filhos[index];
+        aux = aux -> filhos[index]; //pula para a proxima letra
     }
 
-    if(aux != NULL && aux -> folha){
-        return palavra;
-    }
+    if(aux != NULL && aux -> folha) {return palavra; } //lambda
 
+    return NULL;
 }
 
+//Boleano para o retorno da trie
+//mesmo código de cima sendo que para bool
 bool buscaTrie(Trie * raiz , char * palavra){
     if(raiz == NULL){
         printf("Trie vazia\n");
@@ -55,14 +57,16 @@ bool buscaTrie(Trie * raiz , char * palavra){
 
         if(aux -> filhos[idx] == NULL){
             printf("Palavra nao encontrada\n");
-            return false;
+            return false; //letra não encontrada
         }
-        aux = aux -> filhos[idx]; //pula para o próximo 
+        aux = aux -> filhos[idx]; //pula para o próximo
     }
 
-    return aux != NULL && aux -> folha;
+    return aux != NULL && aux -> folha; //diferente pattern
 }
 
+
+//inspirado na BStree
 void liberaTrie(Trie * raiz){
     if(raiz == NULL) return;
 
@@ -84,7 +88,7 @@ void insereTrie(Trie * raiz , char * palavra){
     Trie * aux = raiz;
 
     for(int i = 0 ; i < strlen(palavra) ; i++){
-        int idx = palavra[i] - 'a'; //qual o motivo disso? 
+        int idx = palavra[i] - 'a'; //qual o motivo disso?
 
         if(aux -> filhos[idx] == NULL){
             aux -> filhos[idx] = criaNo(palavra);
@@ -95,6 +99,7 @@ void insereTrie(Trie * raiz , char * palavra){
 
 }
 
+//quase a mesma coisa de verificaTrie
 void imprimeTrie(Trie * raiz , char * palavra , int pos){
     if (raiz == NULL){
         printf("Trie vazia\n");
@@ -102,14 +107,14 @@ void imprimeTrie(Trie * raiz , char * palavra , int pos){
     }
 
     if(raiz -> folha){
-        palavra[pos] = '\0';
+        palavra[pos] = '\0'; //fim da linha
         printf("%s\n", palavra);
     }
 
     for(int i = 0 ; i < TAM_ALFABETO ; i++){
         if(raiz -> filhos[i] != NULL){
-            palavra[pos] = 'a' + i;
-            imprimeTrie(raiz -> filhos[i] , palavra , pos + 1);
+            palavra[pos] = 'a' + i; //varrendo o alfabeto
+            imprimeTrie(raiz -> filhos[i] , palavra , pos + 1); //recursive
         }
     }
 }

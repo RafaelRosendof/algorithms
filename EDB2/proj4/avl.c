@@ -2,14 +2,14 @@
 
 
 /*
-cria node 
-insere palavra encontrada e validada na trie 
+cria node
+insere palavra encontrada e validada na trie
 
-balanceamento 
+balanceamento
 
-remove a palavra a critério do usuário 
+remove a palavra a critério do usuário
 
-balanceamento pós remoção 
+balanceamento pós remoção
 
 imprimer em ordem alfabética(deve ter algo pronto já)
 */
@@ -26,16 +26,21 @@ tree * arv_criaNo(No node){
     novo -> dir = NULL;
     novo -> alt = arv_altura(novo);
     novo -> num_filhos = 0;
+
+    return novo;
 }
 
 
 tree * rotacaoDireita(tree * raiz){
     tree * aux = raiz -> esq;
 
+    // A subárvore direita de 'aux' se torna a subárvore esquerda de 'raiz' após a rotação.
+
     raiz -> esq = aux -> dir;
 
     aux -> dir = raiz;
 
+    //pega o máximo da raiz e aux
     raiz -> alt = 1 + max(arv_altura(raiz -> esq) , arv_altura(raiz -> dir));
     aux -> alt = 1 + max(arv_altura(aux -> esq) , arv_altura(aux -> dir));
 
@@ -45,9 +50,12 @@ tree * rotacaoDireita(tree * raiz){
 tree * rotacaoEsquerda(tree * raiz){
     tree * aux = raiz -> dir;
 
+    // mesma coisa aqui sendo que invertido
+
     raiz -> dir = aux -> esq;
     aux -> esq = raiz;
 
+    //
     raiz -> alt = 1 + max(arv_altura(raiz -> esq) , arv_altura(raiz -> dir));
     aux -> alt = 1 + max(arv_altura(aux -> esq) , arv_altura(aux -> dir));
 
@@ -55,6 +63,7 @@ tree * rotacaoEsquerda(tree * raiz){
 }
 
 
+//mesma coisa aqui porém com a comutação de duas funções
 tree * rotacaoDuplaEsquerda(tree * raiz){
     raiz -> dir = rotacaoDireita(raiz -> dir);
     return rotacaoEsquerda(raiz);
@@ -65,7 +74,7 @@ tree * rotacaoDuplaDireita(tree * raiz){
     return rotacaoDireita(raiz);
 }
 
-//como que eu soluciono isso 
+//como que eu soluciono isso
 tree * arv_insereAVL(tree * raiz , char * palavra){
     if( raiz == NULL){
         No novoNode;
@@ -73,57 +82,55 @@ tree * arv_insereAVL(tree * raiz , char * palavra){
         return arv_criaNo(novoNode);
     }
 
-    if (strcmp(palavra, raiz->node.palavra) < 0 ){
-        return arv_insereAVL(raiz -> esq , palavra);
+    if (strcmp(palavra, raiz->node.palavra) < 0){
+        raiz->esq = arv_insereAVL(raiz->esq, palavra);
     }
     else if(strcmp(palavra, raiz->node.palavra) > 0){
-        return arv_insereAVL(raiz -> dir , palavra);
+        raiz->dir = arv_insereAVL(raiz->dir, palavra);
     }
-
     else{
-
-        printf("Palavra já foi adicionada na AVL ");
-        return raiz; 
+        printf("Palavra já foi adicionada na AVL\n");
+        return raiz;
     }
 
-    raiz -> alt = 1 + max(arv_altura(raiz -> esq) , arv_altura(raiz -> dir));
+    // Atualiza altura
+    raiz->alt = 1 + max(arv_altura(raiz->esq), arv_altura(raiz->dir));
 
     int fb = fatorBalanceamento(raiz);
 
-    if( fb > 1 && strcmp(palavra , raiz -> esq -> node.palavra) < 0 ){
+    // Rotação para balanceamento
+    // Tava dando erro aqui
+    if(fb > 1 && strcmp(palavra, raiz->esq->node.palavra) < 0){
         return rotacaoDireita(raiz);
     }
-
-    if( fb < -1 && strcmp(palavra , raiz -> dir -> node.palavra) > 0){
+    if(fb < -1 && strcmp(palavra, raiz->dir->node.palavra) > 0){
         return rotacaoEsquerda(raiz);
     }
-
-    if( fb > 1 && strcmp(palavra , raiz -> esq -> node.palavra) > 0){
+    if(fb > 1 && strcmp(palavra, raiz->esq->node.palavra) > 0){
         return rotacaoDuplaDireita(raiz);
     }
-
-    if (fb < -1 && strcmp(palavra , raiz -> dir -> node.palavra) < 0){
+    if(fb < -1 && strcmp(palavra, raiz->dir->node.palavra) < 0){
         return rotacaoDuplaEsquerda(raiz);
     }
 
     return raiz;
-
 }
+
 
 
 char * arv_busca(tree * raiz , char *palavra){
     if (raiz == NULL){
         return NULL;
     }
-
+//deu match
     if (strcmp(raiz -> node.palavra , palavra) == 0){
         return raiz->node.palavra;
     }
-
+//recursivo e palavra menor que a raiz
     else if(strcmp(raiz -> node.palavra , palavra) > 0){
         return arv_busca(raiz -> esq , palavra);
     }
-
+//recursivo e palavra maior que a raiz
     else{
         return arv_busca(raiz -> dir , palavra);
     }
@@ -132,7 +139,7 @@ char * arv_busca(tree * raiz , char *palavra){
 
 }
 
-
+//mesma coisa da BStree
 int arv_altura(tree * raiz){
     if (raiz == NULL){
         return -1;
@@ -144,18 +151,17 @@ int arv_altura(tree * raiz){
     return (h1 > h2) ? h1 + 1 : h2 + 1;
 }
 
-int max(int a , int b){
-    return (a > b) ? a : b;
-}
+int max(int a , int b){ return a > b ? a : b;}
 
 int fatorBalanceamento(tree * raiz){
     if (raiz == NULL){
         return 0;
     }
-
+    //altura da esquerda - altura da direita
     return arv_altura(raiz -> esq) - arv_altura(raiz -> dir);
 }
 
+//cópia da BStree
 void arv_libera(tree * raiz){
     if (raiz == NULL) return;
 
@@ -165,6 +171,7 @@ void arv_libera(tree * raiz){
     free(raiz);
 }
 
+//cópia da BStree sendo que para str
 void imprimeAlfabetico(tree * raiz){
     if (raiz == NULL) return;
 
@@ -174,48 +181,65 @@ void imprimeAlfabetico(tree * raiz){
 }
 
 
+//cópia da BStree porém com balanceamento
 bool arv_removeAVL(tree **raiz , char * palavra){
-    
-    if ( (*raiz) == NULL){
-        printf("Arvore vazia, nada a remover ");
+
+    if (*raiz == NULL){
+        printf("Árvore vazia, nada a remover\n");
         return false;
     }
 
-    if( strcmp(palavra , (*raiz)->node.palavra) < 0){
-        return arv_removeAVL( (*raiz) -> esq , palavra);
+    if(strcmp(palavra, (*raiz)->node.palavra) < 0){
+        return arv_removeAVL(&(*raiz)->esq, palavra);
     }
-
-    else if( strcmp(palavra , (*raiz) -> node.palavra) > 0){
-        return arv_removeAVL((*raiz)->dir , palavra);
+    else if(strcmp(palavra, (*raiz)->node.palavra) > 0){
+        return arv_removeAVL(&(*raiz)->dir, palavra);
     }
-
     else {
-
-        if( (*raiz) -> esq == NULL && (*raiz) -> dir == NULL){
-            free (*raiz);
+        // Nó folha
+        if((*raiz)->esq == NULL && (*raiz)->dir == NULL){
+            free(*raiz);
             *raiz = NULL;
             return true;
         }
 
-        if( (*raiz) -> esq == NULL || (*raiz) -> dir == NULL){
-
-            tree *aux = (*raiz) -> esq ? (*raiz) -> esq : (*raiz) -> dir;
-
-            free (*raiz);
+        // Nó com um filho
+        if((*raiz)->esq == NULL || (*raiz)->dir == NULL){
+            tree *aux = (*raiz)->esq ? (*raiz)->esq : (*raiz)->dir;
+            free(*raiz);
             *raiz = aux;
             return true;
         }
 
-        tree * aux = (*raiz) -> dir;
-
-        while( aux -> esq != NULL){
-            aux = aux -> esq;
+        // Nó com dois filhos
+        tree *aux = (*raiz)->dir;
+        while(aux->esq != NULL){
+            aux = aux->esq;
         }
 
-        (*raiz) -> node = aux -> node;
-
-        arv_removeAVL( &(*raiz) -> dir , aux -> node.palavra);
+        (*raiz)->node = aux->node;
+        return arv_removeAVL(&(*raiz)->dir, aux->node.palavra);
     }
 
-    //dúvida
+    //Copiado da inserção!!! -> lembrar de fazer o ponteiro para a raiz argumento é ponteiro duplo
+    // Atualiza altura
+    (*raiz)->alt = 1 + max(arv_altura((*raiz)->esq), arv_altura((*raiz)->dir));
+
+    int fb = fatorBalanceamento(*raiz);
+
+    // Rotação para balanceamento
+    if (fb > 1 && fatorBalanceamento((*raiz)->esq) >= 0) {
+        *raiz = rotacaoDireita(*raiz);
+    }
+    else if (fb > 1 && fatorBalanceamento((*raiz)->esq) < 0) {
+        *raiz = rotacaoDuplaDireita(*raiz);
+    }
+    else if (fb < -1 && fatorBalanceamento((*raiz)->dir) <= 0) {
+        *raiz = rotacaoEsquerda(*raiz);
+    }
+    else if (fb < -1 && fatorBalanceamento((*raiz)->dir) > 0) {
+        *raiz = rotacaoDuplaEsquerda(*raiz);
+    }
+
+    return true;
 }
