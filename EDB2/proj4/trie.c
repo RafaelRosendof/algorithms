@@ -31,6 +31,7 @@ char * verificaTrie(Trie * raiz , char * palavra){
         int index = palavra[i] - 'a'; //varrendo as palavras
 
         if(aux -> filhos[index] == NULL){
+            printf("Impossível de capturar");
             return NULL; //caminho inexistente -> proxima letra não existe
         }
 
@@ -56,13 +57,13 @@ bool buscaTrie(Trie * raiz , char * palavra){
         int idx = palavra[i] - 'a';
 
         if(aux -> filhos[idx] == NULL){
-            printf("Palavra nao encontrada\n");
+            //printf("Palavra nao encontrada\n");
             return false; //letra não encontrada
         }
         aux = aux -> filhos[idx]; //pula para o próximo
     }
 
-    return aux != NULL && aux -> folha; //diferente pattern
+    return (aux != NULL && aux -> folha); //diferente pattern
 }
 
 
@@ -81,7 +82,7 @@ void liberaTrie(Trie * raiz){
 void insereTrie(Trie * raiz , char * palavra){
     if (raiz == NULL){ //ainda precisa?
         printf("Trie vazia\n");
-        criaNo(palavra);
+        criaNo();
         return;
     }
 
@@ -91,7 +92,7 @@ void insereTrie(Trie * raiz , char * palavra){
         int idx = palavra[i] - 'a'; //qual o motivo disso?
 
         if(aux -> filhos[idx] == NULL){
-            aux -> filhos[idx] = criaNo(palavra);
+            aux -> filhos[idx] = criaNo();
         }
         aux = aux -> filhos[idx];
     }

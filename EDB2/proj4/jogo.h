@@ -9,13 +9,15 @@
 
 //extern char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE];
 
+void imprimir_tabuleiro(char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE], int linhas, int colunas);
+void imprimir_palavras(char * palavras);
 void iniciar_arvores(); //feito
-bool ler_palavras(char * file); //feito
-bool ler_tabuleiro(char * file); //feito
-void inserir_palavraTrie(char * palavra); //feito
+void ler_palavras(char * file, Trie *raiz); //feito
+void ler_tabuleiro(char * file); //feito
+void inserir_palavraTrie(char * palavra , Trie *raiz); //feito
 void inserir_palavraAVL(char * palavra);  ////feito
 void buscar_Tabu(Trie * raiz , char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE]);
 
 void imprimir_resultados(); //feito
 
-void fluxoJogo(char * tabuleiro , char * palavras);
+void fluxoJogo(char * tabuleiro , char * palavras, Trie *raiz);
