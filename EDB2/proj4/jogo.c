@@ -133,9 +133,10 @@ void buscar_Tabu(Trie *raiz, char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE]) {
                             //inserir_palavraAVL(palavra); // Se existir, insere na AVL
                             //}
 
-                        if (verificaTrie(raiz, palavra) != NULL) {
+                        if (buscaTrie(raiz, palavra)) {
                             inserir_palavraAVL(palavra);
                         } else {
+                            //printf("Não foi possível inserir aqui");
                             break; // Pare se o prefixo não for válido
                         }
 

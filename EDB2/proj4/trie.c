@@ -18,7 +18,15 @@ Trie * criaNo(){
     return no;
 }
 
+char normalizaCaractere(char c) {
+    if (isalpha(c)) { // Verifica se é uma letra
+        return tolower(c); // Converte para minúscula
+    }
+    return '\0'; // Retorna caractere nulo para indicar inválido
+}
+
 //retornar palavra na trie
+/*
 char * verificaTrie(Trie * raiz , char * palavra){
     if (raiz == NULL){
         printf("Trie vazia\n");
@@ -27,8 +35,8 @@ char * verificaTrie(Trie * raiz , char * palavra){
 
     Trie * aux = raiz;
 
-    for(int i = 0; i < strlen(palavra); i++){
-        int index = palavra[i] - 'a'; //varrendo as palavras
+    for(int i = 0; i < palavra[i] != '\0'; i++){
+        //int index = palavra[i] - 'a'; //varrendo as palavras
 
         if(aux -> filhos[index] == NULL){
             printf("Impossível de capturar");
@@ -42,28 +50,76 @@ char * verificaTrie(Trie * raiz , char * palavra){
 
     return NULL;
 }
+*/
+char * verificaTrie(Trie * raiz , char * palavra) {
+    if (raiz == NULL) {
+        printf("Trie vazia\n");
+        return NULL;
+    }
 
+    Trie * aux = raiz;
+
+    for (int i = 0; palavra[i] != '\0'; i++) {
+        char c = normalizaCaractere(palavra[i]);
+
+        if (c == '\0') { // Caractere inválido
+            printf("Caractere inválido encontrado: %c\n", palavra[i]);
+            return NULL;
+        }
+
+        int index = c - 'a'; // Calcula o índice no alfabeto
+
+        if (aux->filhos[index] == NULL) {
+            printf("Caminho inexistente para a letra: %c\n", c);
+            return NULL;
+        }
+
+        aux = aux->filhos[index];
+    }
+
+    if (aux != NULL && aux->folha) {
+        return palavra; // Palavra encontrada
+    }
+
+    return NULL; // Palavra não encontrada
+}
+
+
+//gcc -O0 -g -o figas jogo.c main.c avl.c trie.c
+//gdb ./figas
 //Boleano para o retorno da trie
-//mesmo código de cima sendo que para bool
-bool buscaTrie(Trie * raiz , char * palavra){
-    if(raiz == NULL){
+
+bool buscaTrie(Trie * raiz, char * palavra) {
+    if(raiz == NULL) {
         printf("Trie vazia\n");
         return false;
     }
 
     Trie * aux = raiz;
+    for(int i = 0; palavra[i] != '\0'; i++) {
+        char c = palavra[i];
 
-    for(int i = 0 ; i < strlen(palavra); i++){
-        int idx = palavra[i] - 'a';
+        // Ignorar espaços
+        if (c == ' ') continue;
 
-        if(aux -> filhos[idx] == NULL){
-            //printf("Palavra nao encontrada\n");
-            return false; //letra não encontrada
+        // Converter maiúsculas para minúsculas
+        if (c >= 'A' && c <= 'Z') {
+            c = c + ('a' - 'A');
         }
-        aux = aux -> filhos[idx]; //pula para o próximo
+
+        // Verificar se o caractere é válido
+        if (c < 'a' || c > 'z') {
+            return false; // Caractere não permitido
+        }
+
+        int idx = c - 'a';  // Use the normalized character
+        if(aux->filhos[idx] == NULL) {
+            return false;
+        }
+        aux = aux->filhos[idx];
     }
 
-    return (aux != NULL && aux -> folha); //diferente pattern
+    return (aux != NULL && aux->folha);
 }
 
 

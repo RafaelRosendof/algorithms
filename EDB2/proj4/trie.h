@@ -1,6 +1,7 @@
 #ifndef TRIE_H
 #define TRIE_H
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -16,6 +17,8 @@ struct Trie{
 };
 
 //funções
+
+char normalizaCaractere(char c);
 
 Trie * criaNo(); //feito
 

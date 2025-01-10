@@ -1,4 +1,5 @@
 #include "avl.h"
+#include <string.h>
 
 
 /*
@@ -19,9 +20,10 @@ tree * arv_criaVazia(){
 }
 
 
-tree * arv_criaNo(No node){
+tree * arv_criaNo(char palavra[100]){
     tree * novo = (tree*)malloc(sizeof(tree));
-    novo -> node = node;
+    strcpy(novo->palavra, palavra);
+    // novo -> palavra = palavra
     novo -> esq = NULL;
     novo -> dir = NULL;
     novo -> alt = arv_altura(novo);
@@ -77,15 +79,13 @@ tree * rotacaoDuplaDireita(tree * raiz){
 //como que eu soluciono isso
 tree * arv_insereAVL(tree * raiz , char * palavra){
     if( raiz == NULL){
-        No novoNode;
-        strcpy(novoNode.palavra , palavra);
-        return arv_criaNo(novoNode);
+        return arv_criaNo(palavra);
     }
 
-    if (strcmp(palavra, raiz->node.palavra) < 0){
+    if (strcmp(palavra, raiz->palavra) < 0){
         raiz->esq = arv_insereAVL(raiz->esq, palavra);
     }
-    else if(strcmp(palavra, raiz->node.palavra) > 0){
+    else if(strcmp(palavra, raiz->palavra) > 0){
         raiz->dir = arv_insereAVL(raiz->dir, palavra);
     }
     else{
@@ -100,16 +100,16 @@ tree * arv_insereAVL(tree * raiz , char * palavra){
 
     // Rotação para balanceamento
     // Tava dando erro aqui
-    if(fb > 1 && strcmp(palavra, raiz->esq->node.palavra) < 0){
+    if(fb > 1 && strcmp(palavra, raiz->esq->palavra) < 0){
         return rotacaoDireita(raiz);
     }
-    if(fb < -1 && strcmp(palavra, raiz->dir->node.palavra) > 0){
+    if(fb < -1 && strcmp(palavra, raiz->dir->palavra) > 0){
         return rotacaoEsquerda(raiz);
     }
-    if(fb > 1 && strcmp(palavra, raiz->esq->node.palavra) > 0){
+    if(fb > 1 && strcmp(palavra, raiz->esq->palavra) > 0){
         return rotacaoDuplaDireita(raiz);
     }
-    if(fb < -1 && strcmp(palavra, raiz->dir->node.palavra) < 0){
+    if(fb < -1 && strcmp(palavra, raiz->dir->palavra) < 0){
         return rotacaoDuplaEsquerda(raiz);
     }
 
@@ -123,11 +123,11 @@ char * arv_busca(tree * raiz , char *palavra){
         return NULL;
     }
 //deu match
-    if (strcmp(raiz -> node.palavra , palavra) == 0){
-        return raiz->node.palavra;
+    if (strcmp(raiz -> palavra , palavra) == 0){
+        return raiz->palavra;
     }
 //recursivo e palavra menor que a raiz
-    else if(strcmp(raiz -> node.palavra , palavra) > 0){
+    else if(strcmp(raiz -> palavra , palavra) > 0){
         return arv_busca(raiz -> esq , palavra);
     }
 //recursivo e palavra maior que a raiz
@@ -176,7 +176,7 @@ void imprimeAlfabetico(tree * raiz){
     if (raiz == NULL) return;
 
     imprimeAlfabetico(raiz -> esq);
-    printf("%s\n" , raiz -> node.palavra);
+    printf("%s\n" , raiz -> palavra);
     imprimeAlfabetico(raiz -> dir);
 }
 
@@ -189,10 +189,10 @@ bool arv_removeAVL(tree **raiz , char * palavra){
         return false;
     }
 
-    if(strcmp(palavra, (*raiz)->node.palavra) < 0){
+    if(strcmp(palavra, (*raiz)->palavra) < 0){
         return arv_removeAVL(&(*raiz)->esq, palavra);
     }
-    else if(strcmp(palavra, (*raiz)->node.palavra) > 0){
+    else if(strcmp(palavra, (*raiz)->palavra) > 0){
         return arv_removeAVL(&(*raiz)->dir, palavra);
     }
     else {
@@ -217,8 +217,8 @@ bool arv_removeAVL(tree **raiz , char * palavra){
             aux = aux->esq;
         }
 
-        (*raiz)->node = aux->node;
-        return arv_removeAVL(&(*raiz)->dir, aux->node.palavra);
+        strcpy((*raiz)->palavra, aux->palavra);
+        return arv_removeAVL(&(*raiz)->dir, aux->palavra);
     }
 
     //Copiado da inserção!!! -> lembrar de fazer o ponteiro para a raiz argumento é ponteiro duplo

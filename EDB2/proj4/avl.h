@@ -7,16 +7,11 @@
 #include <stdbool.h>
 #include <string.h>
 
-typedef struct No No ;
 typedef struct tree tree ;
-
-struct No{
-    char palavra[100];
-};
 
 struct tree{
     int alt;
-    No node;
+    char palavra[100];
     int num_filhos;
     tree * esq;
     tree *dir;
@@ -24,7 +19,7 @@ struct tree{
 
 tree * arv_criaVazia(); //feito
 tree * arv_insereAVL(tree* raiz , char * palavra); //feito
-tree * arv_criaNo(No node); //feito
+tree * arv_criaNo(char palavra[100]); //feito
 tree * rotacaoDireita(tree* raiz); //feito
 tree * rotacaoEsquerda(tree* raiz); //feito
 tree * rotacaoDuplaDireita(tree* raiz); //feito
