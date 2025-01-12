@@ -10,9 +10,33 @@
  char *tabuleiros = "tabuleiro.txt";
 
 //Colocar opções de visualizar a árvore e remover palavras, etc...
-void jogar(char *file1 , char * file2, Trie * raizTrie , tree * raizAVL){
+void jogar(char *file1 , char * file2, Trie * raizTrie , tree ** raizAVL){
 
-    fluxoJogo(file2 , file1, raizTrie);
+    fluxoJogo(file2 , file1, raizTrie, raizAVL);
+
+    //printf("Imprimindo a trie \n\n::: ");
+    //char palavra[100] = "adrasteia";
+    //imprimeTrie(raizTrie, palavra , 0); //até aqui ta ok
+
+/*
+    if(buscaTrie(raizTrie, palavra)){
+        printf("Palavra encontrada\n");
+        arv_insereAVL(raizAVL, palavra);
+    }else{
+        printf("Palavra não LOCALIZADA JOGAR FUNCTION\n");
+    }
+*/
+/*
+raizAVL = arv_insereAVL(raizAVL, "adrasteia");
+raizAVL = arv_insereAVL(raizAVL, "adra");
+raizAVL = arv_insereAVL(raizAVL, "figas");
+raizAVL = arv_insereAVL(raizAVL, "Rafael");
+*/
+
+
+
+    //printf("Imprimindo a AVL\n");
+    //imprimeAlfabetico(*raizAVL);
 
     int choice = 1;
 
@@ -31,13 +55,15 @@ void jogar(char *file1 , char * file2, Trie * raizTrie , tree * raizAVL){
                 printf("Saindo...\n");
                 break;
             case 1:
-                imprimir_resultados();
+                //imprimir_resultados();
+                printf("Imprimindo a AVL\n");
+                imprimeAlfabetico(*raizAVL);
                 break;
             case 2:
                 printf("Digite a palavra que deseja remover: ");
                 char palavra[100];
                 scanf("%s" , palavra);
-                if(arv_removeAVL(&raizAVL , palavra)){
+                if(arv_removeAVL(raizAVL , palavra)){
                     printf("Palavra removida\n");
                 }
                 else{
@@ -45,21 +71,26 @@ void jogar(char *file1 , char * file2, Trie * raizTrie , tree * raizAVL){
                 }
                 break;
             case 3:
-                imprimeAlfabetico(raizAVL);
+                imprimeAlfabetico(*raizAVL);
                 break;
             case 4:
                 printf("Digite a palavra que deseja remover: ");
                 char palav[100]; //tava dando erro aqui de redefinição
                 scanf("%s" , palav);
-                if(arv_busca(raizAVL, palav)){
-                   printf("Palavra encontrada %s \n", palav);
+                if(arv_busca(*raizAVL, palav)){
+                    printf("Palavra encontrada %s \n", palav);
                 }else{
                     printf("Palavra não encontrada\n");
                 }
                 break;
 
             case 5:
-                imprimeTrie(raizTrie , "" , 0);
+                {
+                char palavra[100]; //deu certo
+                printf("Visualizadno a trie\n");
+                strcpy(palavra, "adrasteia"); // copia da primeira palavra do arquivo, ou pergunta qual palavra quer
+                imprimeTrie(raizTrie, palavra, 0);
+                }
                 break;
 
             default:
@@ -75,7 +106,7 @@ int main(){
 
     printf("Bem-vindo ao jogo de palavras!\n");
 
-    // Solicita os arquivos de entrada
+
     //printf("Digite o caminho do arquivo de palavras: ");
     char filePalavras[100];
     //scanf("%s", filePalavras);
@@ -91,7 +122,7 @@ int main(){
     //imprimir_tabuleiro( tabuleiros, 100, 100);
 
     // Inicia o fluxo principal do jogo
-    jogar(palavras, tabuleiros, raizTrie, raizAVL);
+    jogar(palavras, tabuleiros, raizTrie, &raizAVL);
 
     // Libera a memória alocada
     liberaTrie(raizTrie);
@@ -100,6 +131,4 @@ int main(){
     printf("Jogo encerrado. Até a próxima!\n");
     return 0;
 
-
-    return 0;
 }

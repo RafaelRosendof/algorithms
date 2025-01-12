@@ -16,8 +16,8 @@ void ler_palavras(char * file, Trie *raiz); //feito
 void ler_tabuleiro(char * file); //feito
 void inserir_palavraTrie(char * palavra , Trie *raiz); //feito
 void inserir_palavraAVL(char * palavra);  ////feito
-void buscar_Tabu(Trie * raiz , char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE]);
+void buscar_Tabu(Trie * raiz ,tree ** raizAVL, char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE]);
 
 void imprimir_resultados(); //feito
 
-void fluxoJogo(char * tabuleiro , char * palavras, Trie *raiz);
+void fluxoJogo(char * tabuleiro , char * palavras, Trie *raiz, tree **raizAVL);

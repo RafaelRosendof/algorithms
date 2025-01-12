@@ -22,11 +22,16 @@ tree * arv_criaVazia(){
 
 tree * arv_criaNo(char palavra[100]){
     tree * novo = (tree*)malloc(sizeof(tree));
+
+    if(novo == NULL) {
+        printf("Erro ao alocar memória\n");
+        return NULL;
+    }
     strcpy(novo->palavra, palavra);
     // novo -> palavra = palavra
     novo -> esq = NULL;
     novo -> dir = NULL;
-    novo -> alt = arv_altura(novo);
+    novo -> alt = 1;
     novo -> num_filhos = 0;
 
     return novo;
@@ -76,46 +81,67 @@ tree * rotacaoDuplaDireita(tree * raiz){
     return rotacaoDireita(raiz);
 }
 
-//como que eu soluciono isso
-tree * arv_insereAVL(tree * raiz , char * palavra){
-    if( raiz == NULL){
-        return arv_criaNo(palavra);
+/*
+
+}
+*/
+tree* arv_insereAVL(tree** raiz, char* palavra) {
+    if (*raiz == NULL) {  //tem que ser duplo para alterar a raiz
+        tree* novo = arv_criaNo(palavra);
+        *raiz = novo;
+        return novo;
     }
 
-    if (strcmp(palavra, raiz->palavra) < 0){
-        raiz->esq = arv_insereAVL(raiz->esq, palavra);
+    int cmp = strcmp(palavra, (*raiz)->palavra);
+
+    if (cmp < 0) {
+        (*raiz)->esq = arv_insereAVL(&((*raiz)->esq), palavra);
     }
-    else if(strcmp(palavra, raiz->palavra) > 0){
-        raiz->dir = arv_insereAVL(raiz->dir, palavra);
+    else if (cmp > 0) {
+        (*raiz)->dir = arv_insereAVL(&((*raiz)->dir), palavra);
     }
-    else{
-        printf("Palavra já foi adicionada na AVL\n");
-        return raiz;
+    else {
+        return *raiz;
     }
 
-    // Atualiza altura
-    raiz->alt = 1 + max(arv_altura(raiz->esq), arv_altura(raiz->dir));
 
-    int fb = fatorBalanceamento(raiz);
+    (*raiz)->alt = 1 + max(arv_altura((*raiz)->esq), arv_altura((*raiz)->dir));
 
-    // Rotação para balanceamento
-    // Tava dando erro aqui
-    if(fb > 1 && strcmp(palavra, raiz->esq->palavra) < 0){
-        return rotacaoDireita(raiz);
+
+    int fb = fatorBalanceamento(*raiz);
+
+    //balanceamento
+    if (fb > 1 && strcmp(palavra, (*raiz)->esq->palavra) < 0) {
+        *raiz = rotacaoDireita(*raiz);
     }
-    if(fb < -1 && strcmp(palavra, raiz->dir->palavra) > 0){
-        return rotacaoEsquerda(raiz);
+    else if (fb < -1 && strcmp(palavra, (*raiz)->dir->palavra) > 0) {
+        *raiz = rotacaoEsquerda(*raiz);
     }
-    if(fb > 1 && strcmp(palavra, raiz->esq->palavra) > 0){
-        return rotacaoDuplaDireita(raiz);
+    else if (fb > 1 && strcmp(palavra, (*raiz)->esq->palavra) > 0) {
+        (*raiz)->esq = rotacaoEsquerda((*raiz)->esq);
+        *raiz = rotacaoDireita(*raiz);
     }
-    if(fb < -1 && strcmp(palavra, raiz->dir->palavra) < 0){
-        return rotacaoDuplaEsquerda(raiz);
+    else if (fb < -1 && strcmp(palavra, (*raiz)->dir->palavra) < 0) {
+        (*raiz)->dir = rotacaoDireita((*raiz)->dir);
+        *raiz = rotacaoEsquerda(*raiz);
     }
 
-    return raiz;
+    return *raiz;
 }
 
+//ta dando erro de inserir, função para debugar o inserir
+void auxiliar(tree* raiz, int level) {
+    if (raiz == NULL) return;
+
+    auxiliar(raiz->dir, level + 1);
+
+    for (int i = 0; i < level; i++) {
+        printf("    ");
+    }
+    printf("%s (h:%d, fb:%d)\n", raiz->palavra, arv_altura(raiz), fatorBalanceamento(raiz));
+
+    auxiliar(raiz->esq, level + 1);
+}
 
 
 char * arv_busca(tree * raiz , char *palavra){
@@ -139,6 +165,14 @@ char * arv_busca(tree * raiz , char *palavra){
 
 }
 
+int arv_altura(tree* raiz) {
+    if (raiz == NULL) {
+        return 0;  // altura da árvore vazia e incrementando corretamente a altura
+    }
+    return 1 + max(arv_altura(raiz->esq), arv_altura(raiz->dir));
+}
+
+/*
 //mesma coisa da BStree
 int arv_altura(tree * raiz){
     if (raiz == NULL){
@@ -150,6 +184,7 @@ int arv_altura(tree * raiz){
 
     return (h1 > h2) ? h1 + 1 : h2 + 1;
 }
+*/
 
 int max(int a , int b){ return a > b ? a : b;}
 

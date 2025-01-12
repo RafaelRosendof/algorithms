@@ -18,11 +18,12 @@ Trie * criaNo(){
     return no;
 }
 
+//funcão auxiliar para me ajudar
 char normalizaCaractere(char c) {
-    if (isalpha(c)) { // Verifica se é uma letra
-        return tolower(c); // Converte para minúscula
+    if (isalpha(c)) { // verifica se é uma letra
+        return tolower(c); // onverte para minúscula
     }
-    return '\0'; // Retorna caractere nulo para indicar inválido
+    return '\0'; // retorna caso invalido
 }
 
 //retornar palavra na trie
@@ -62,12 +63,12 @@ char * verificaTrie(Trie * raiz , char * palavra) {
     for (int i = 0; palavra[i] != '\0'; i++) {
         char c = normalizaCaractere(palavra[i]);
 
-        if (c == '\0') { // Caractere inválido
+        if (c == '\0') { // inválido
             printf("Caractere inválido encontrado: %c\n", palavra[i]);
             return NULL;
         }
 
-        int index = c - 'a'; // Calcula o índice no alfabeto
+        int index = c - 'a'; //  índice no alfabeto
 
         if (aux->filhos[index] == NULL) {
             printf("Caminho inexistente para a letra: %c\n", c);
@@ -78,10 +79,10 @@ char * verificaTrie(Trie * raiz , char * palavra) {
     }
 
     if (aux != NULL && aux->folha) {
-        return palavra; // Palavra encontrada
+        return palavra;
     }
 
-    return NULL; // Palavra não encontrada
+    return NULL;
 }
 
 
@@ -89,6 +90,7 @@ char * verificaTrie(Trie * raiz , char * palavra) {
 //gdb ./figas
 //Boleano para o retorno da trie
 
+//Exṕlicar melhor aqui ou deixar mais humano
 bool buscaTrie(Trie * raiz, char * palavra) {
     if(raiz == NULL) {
         printf("Trie vazia\n");
@@ -102,17 +104,17 @@ bool buscaTrie(Trie * raiz, char * palavra) {
         // Ignorar espaços
         if (c == ' ') continue;
 
-        // Converter maiúsculas para minúsculas
+
         if (c >= 'A' && c <= 'Z') {
             c = c + ('a' - 'A');
         }
 
-        // Verificar se o caractere é válido
+
         if (c < 'a' || c > 'z') {
-            return false; // Caractere não permitido
+            return false;
         }
 
-        int idx = c - 'a';  // Use the normalized character
+        int idx = c - 'a';
         if(aux->filhos[idx] == NULL) {
             return false;
         }
@@ -145,7 +147,7 @@ void insereTrie(Trie * raiz , char * palavra){
     Trie * aux = raiz;
 
     for(int i = 0 ; i < strlen(palavra) ; i++){
-        int idx = palavra[i] - 'a'; //qual o motivo disso?
+        int idx = palavra[i] - 'a';
 
         if(aux -> filhos[idx] == NULL){
             aux -> filhos[idx] = criaNo();

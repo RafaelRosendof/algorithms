@@ -17,8 +17,10 @@ struct tree{
     tree *dir;
 };
 
+void auxiliar(tree* raiz, int level);
 tree * arv_criaVazia(); //feito
-tree * arv_insereAVL(tree* raiz , char * palavra); //feito
+tree * arv_insereAVL(tree ** raiz, char * palavra); //feito
+//tree * arv_insereAVL(tree* raiz , char * palavra); //feito
 tree * arv_criaNo(char palavra[100]); //feito
 tree * rotacaoDireita(tree* raiz); //feito
 tree * rotacaoEsquerda(tree* raiz); //feito

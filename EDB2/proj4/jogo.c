@@ -24,18 +24,14 @@ void iniciar_arvores(){
     raizTrie = criaNo();
 }
 
-/*
-void inserir_palavraTrie(char * palavra){
-    insereTrie(raizTrie , palavra); //colocar a insereTrie como tree ou mudar a lógica aqui
-}
-*/
+
 
 //INCOMPLETO -> FALTA VALIDAR NA TRIE
 //Somente caso seja validado na trie
 void inserir_palavraAVL(char * palavra){
-    //No node;
-    //strcpy(node.palavra , palavra);
-    raizAVL = arv_insereAVL(raizAVL , palavra);
+
+   // raizAVL = arv_insereAVL(raizAVL , palavra);
+
 }
 
 void imprmir_palavras(char * palavras){
@@ -59,8 +55,12 @@ void ler_palavras(char * file, Trie * raiz){
         insereTrie(raiz , palavra);
         //imprmir_palavras(palavra);
         //imprimeTrie(raiz, palavra, 0);
+        printf(" PALAVRA INSERIDA: %s\n", palavra);
     }
-    char palavra[100] = "carro";
+    char palavra[100] = "adrasteia";
+
+
+
     imprimeTrie(raiz, palavra , 0);
     fclose(arq);
 
@@ -102,46 +102,53 @@ void ler_tabuleiro(char *file) {
 
 }
 
-//função de busca
-void buscar_Tabu(Trie *raiz, char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE]) {
-    char palavra[100]; // Buffer para armazenar a palavra formada durante a busca
-    int linhas = TABULEIRO_SIZE; // Número de linhas do tabuleiro
-    int colunas = TABULEIRO_SIZE; // Número de colunas do tabuleiro
-
-    // Percorre cada posição da matriz (tabuleiro)
+void buscar_Tabu(Trie *raiz, tree **raizAVL, char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE]) {
+    char palavra[100];
+    int linhas = TABULEIRO_SIZE;
+    int colunas = TABULEIRO_SIZE;
+    
+    printf("Tabuleiro carregado:\n");
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
+            printf("%c ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
 
-            // Explora todas as direções possíveis (8 direções: N, NE, E, SE, S, SO, O, NO)
+    // Para cada posição inicial no tabuleiro
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            // Para cada direção possível
             for (int Di = -1; Di <= 1; Di++) {
                 for (int Dj = -1; Dj <= 1; Dj++) {
-                    // Ignora a direção estática (quando não há movimento em nenhuma direção)
-                    if (Di == 0 && Dj == 0) continue;
-
-                    int x = i; // Coordenada inicial da linha
-                    int y = j; // Coordenada inicial da coluna
-                    int pos = 0; // Índice para construção da palavra
-
-                    // Percorre na direção atual enquanto estiver dentro dos limites do tabuleiro
-                    while (x >= 0 && x < linhas && y >= 0 && y < colunas) {
-                        // Adiciona a letra atual ao buffer da palavra
+                    if (Di == 0 && Dj == 0) continue; // Ignora a direção (0, 0)
+                    
+                    int x = i, y = j;
+                    int pos = 0;
+                    memset(palavra, 0, sizeof(palavra));
+                    
+                    // Enquanto estiver dentro dos limites do tabuleiro
+                    while (x >= 0 && x < linhas && y >= 0 && y < colunas && pos < 99) {
+                        // Adiciona apenas o caractere atual (sem espaços)
                         palavra[pos++] = tabuleiro[x][y];
-                        palavra[pos] = '\0'; // Adiciona o caractere nulo para formar uma string válida
-
-                        //char *resultado = verificaTrie(raiz, palavra);
-                        //if (resultado != NULL) {
-                            //inserir_palavraAVL(palavra); // Se existir, insere na AVL
-                            //}
-
+                        palavra[pos] = '\0';
+                        
                         if (buscaTrie(raiz, palavra)) {
-                            inserir_palavraAVL(palavra);
-                        } else {
-                            //printf("Não foi possível inserir aqui");
-                            break; // Pare se o prefixo não for válido
+                            printf("Palavra encontrada: %s na posição inicial (%d,%d)\n",palavra, i, j);
+                            
+                            // Debug print before insertion
+                           // printf("Antes da inserção:\n");
+                            //debug_print_tree(*raizAVL, 0);
+                            
+                            // Correct way to call arv_insereAVL
+                            *raizAVL = arv_insereAVL(raizAVL, palavra);
+                            
+                            // Debug print after insertion
+                            //printf("Depois da inserção:\n");
+                        //    debug_print_tree(*raizAVL, 0);
                         }
-
-
-                        // Atualiza as coordenadas para a próxima posição na direção atual
+                        
+                        // Move para próxima posição na direção atual
                         x += Di;
                         y += Dj;
                     }
@@ -151,21 +158,22 @@ void buscar_Tabu(Trie *raiz, char tabuleiro[TABULEIRO_SIZE][TABULEIRO_SIZE]) {
     }
 }
 
+
 void imprimir_resultados(){
     imprimeAlfabetico(raizAVL);
 }
 
-void fluxoJogo(char * arquivoTab , char * arqP, Trie * raizTrie){
+void fluxoJogo(char * arquivoTab , char * arqP, Trie * raizTrie , tree ** raizAVL){
 
     iniciar_arvores();           // inicializa AVL e Trie
     ler_palavras(arqP, raizTrie); // carrega palavras na Trie
 
-    printf("\n\nLendo as palavras da trie\n\n");
-    char palavra[100] = "carro";
-    imprimeTrie(raizTrie, palavra , 0);
+    //printf("\n\nLendo as palavras da trie agora\n\n");
+    //char palavra[100] = "adrasteia";
+    //imprimeTrie(raizTrie, palavra , 0);
 
     ler_tabuleiro(arquivoTab); // carrega tabuleiro
 
-    buscar_Tabu(raizTrie, tabuleiro); // busca palavras no tabuleiro
+    buscar_Tabu(raizTrie, raizAVL,  tabuleiro); // busca palavras no tabuleiro
 
 }
