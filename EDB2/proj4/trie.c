@@ -90,7 +90,7 @@ char * verificaTrie(Trie * raiz , char * palavra) {
 //gdb ./figas
 //Boleano para o retorno da trie
 
-//Exṕlicar melhor aqui ou deixar mais humano
+
 bool buscaTrie(Trie * raiz, char * palavra) {
     if(raiz == NULL) {
         printf("Trie vazia\n");
@@ -105,12 +105,12 @@ bool buscaTrie(Trie * raiz, char * palavra) {
         if (c == ' ') continue;
 
 
-        if (c >= 'A' && c <= 'Z') {
+        if (c >= 'A' && c <= 'Z') { //asic indesejado
             c = c + ('a' - 'A');
         }
 
 
-        if (c < 'a' || c > 'z') {
+        if (c < 'a' || c > 'z') { //algum asic indesejado
             return false;
         }
 
@@ -121,7 +121,7 @@ bool buscaTrie(Trie * raiz, char * palavra) {
         aux = aux->filhos[idx];
     }
 
-    return (aux != NULL && aux->folha);
+    return (aux != NULL && aux->folha); //GDB aqui
 }
 
 
