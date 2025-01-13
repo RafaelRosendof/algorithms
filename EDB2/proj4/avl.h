@@ -17,7 +17,9 @@ struct tree{
     tree *dir;
 };
 
-void auxiliar(tree* raiz, int level);
+
+char* normalizaPalavra(const char* original);//feito
+void auxiliar(tree* raiz, int level);//feito
 tree * arv_criaVazia(); //feito
 tree * arv_insereAVL(tree ** raiz, char * palavra); //feito
 //tree * arv_insereAVL(tree* raiz , char * palavra); //feito

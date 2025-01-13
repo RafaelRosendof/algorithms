@@ -57,11 +57,11 @@ void ler_palavras(char * file, Trie * raiz){
         //imprimeTrie(raiz, palavra, 0);
         printf(" PALAVRA INSERIDA: %s\n", palavra);
     }
-    char palavra[100] = "adrasteia";
+   // char palavra[100] = "adrasteia";
 
 
 
-    imprimeTrie(raiz, palavra , 0);
+    //imprimeTrie(raiz, palavra , 0);
     fclose(arq);
 
 }
@@ -106,7 +106,7 @@ void buscar_Tabu(Trie *raiz, tree **raizAVL, char tabuleiro[TABULEIRO_SIZE][TABU
     char palavra[100];
     int linhas = TABULEIRO_SIZE;
     int colunas = TABULEIRO_SIZE;
-    
+
     printf("Tabuleiro carregado:\n");
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
@@ -122,32 +122,32 @@ void buscar_Tabu(Trie *raiz, tree **raizAVL, char tabuleiro[TABULEIRO_SIZE][TABU
             for (int Di = -1; Di <= 1; Di++) {
                 for (int Dj = -1; Dj <= 1; Dj++) {
                     if (Di == 0 && Dj == 0) continue; // Ignora a direção (0, 0)
-                    
+
                     int x = i, y = j;
                     int pos = 0;
                     memset(palavra, 0, sizeof(palavra));
-                    
+
                     // Enquanto estiver dentro dos limites do tabuleiro
                     while (x >= 0 && x < linhas && y >= 0 && y < colunas && pos < 99) {
                         // Adiciona apenas o caractere atual (sem espaços)
                         palavra[pos++] = tabuleiro[x][y];
                         palavra[pos] = '\0';
-                        
+
                         if (buscaTrie(raiz, palavra)) {
                             printf("Palavra encontrada: %s na posição inicial (%d,%d)\n",palavra, i, j);
-                            
+
                             // Debug print before insertion
                            // printf("Antes da inserção:\n");
                             //debug_print_tree(*raizAVL, 0);
-                            
+
                             // Correct way to call arv_insereAVL
                             *raizAVL = arv_insereAVL(raizAVL, palavra);
-                            
+
                             // Debug print after insertion
                             //printf("Depois da inserção:\n");
                         //    debug_print_tree(*raizAVL, 0);
                         }
-                        
+
                         // Move para próxima posição na direção atual
                         x += Di;
                         y += Dj;

@@ -159,21 +159,29 @@ void insereTrie(Trie * raiz , char * palavra){
 }
 
 //quase a mesma coisa de verificaTrie
-void imprimeTrie(Trie * raiz , char * palavra , int pos){
+void imprimeTrie(Trie * raiz , int nivel, char * palavra , int pos){
     if (raiz == NULL){
         printf("Trie vazia\n");
         return;
     }
 
-    if(raiz -> folha){
-        palavra[pos] = '\0'; //fim da linha
-        printf("%s\n", palavra);
-    }
-
-    for(int i = 0 ; i < TAM_ALFABETO ; i++){
+    if(nivel < pos){
+        int i =  palavra[nivel] - 'a';
         if(raiz -> filhos[i] != NULL){
-            palavra[pos] = 'a' + i; //varrendo o alfabeto
-            imprimeTrie(raiz -> filhos[i] , palavra , pos + 1); //recursive
+            imprimeTrie(raiz -> filhos[i] , nivel+1, palavra , pos); //recursive
+        }
+    } else {
+        if(raiz -> folha){
+            palavra[pos] = '\0'; //fim da linha
+            printf("%s\n", palavra);
+        }
+
+        for(int i = 0 ; i < TAM_ALFABETO ; i++){
+            if(raiz -> filhos[i] != NULL){
+                palavra[pos] = 'a' + i; //varrendo o alfabeto
+                imprimeTrie(raiz -> filhos[i] , nivel+1, palavra , pos + 1); //recursive
+            }
         }
     }
+
 }

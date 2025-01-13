@@ -86,14 +86,14 @@ raizAVL = arv_insereAVL(raizAVL, "Rafael");
 
             case 5:
                 {
-                char palavra[100]; //deu certo
+                char palavra[100]={0}; //deu certo
                 printf("Visualizadno a trie\n");
                 //strcpy(palavra, "adrasteia"); // copia da primeira palavra do arquivo, ou pergunta qual palavra quer
                 printf("Insira a primeira palavra que deseja: ");
                 scanf("%s", palavra);
                 printf("E a posição que deseja começar: ");
                 int pos; scanf("%d", &pos);
-                imprimeTrie(raizTrie, palavra, pos);
+                imprimeTrie(raizTrie, 0, palavra, pos);
                 }
                 break;
 

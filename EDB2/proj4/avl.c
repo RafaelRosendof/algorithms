@@ -85,25 +85,65 @@ tree * rotacaoDuplaDireita(tree * raiz){
 
 }
 */
+
+//corrigindo erro de leitura
+char* normalizaPalavra(const char* original) {
+    if (original == NULL) return NULL;
+
+
+    int len = strlen(original);
+    char* normalizada = (char*)malloc(len + 1);
+    int j = 0;
+
+
+    for (int i = 0; original[i] != '\0'; i++) {
+        char c = original[i];
+
+        // pula aqui
+        if (c == ' ') continue;
+
+        // mesma coisa da trie
+        if (c >= 'A' && c <= 'Z') {
+            c = c + ('a' - 'A');
+        }
+
+
+        if (c >= 'a' && c <= 'z') {
+            normalizada[j++] = c;
+        }
+    }
+
+    normalizada[j] = '\0';
+    return normalizada;
+}
+
+
 tree* arv_insereAVL(tree** raiz, char* palavra) {
+
+    char * palavraN = normalizaPalavra(palavra);
+    if(palavraN == NULL) return *raiz;
+
     if (*raiz == NULL) {  //tem que ser duplo para alterar a raiz
-        tree* novo = arv_criaNo(palavra);
+        tree* novo = arv_criaNo(palavraN);
+        //tree* novo = arv_criaNo(palavra);
         *raiz = novo;
+        free(palavraN);
         return novo;
     }
 
-    int cmp = strcmp(palavra, (*raiz)->palavra);
+    int cmp = strcmp(palavraN, (*raiz)->palavra);
 
     if (cmp < 0) {
-        (*raiz)->esq = arv_insereAVL(&((*raiz)->esq), palavra);
+        (*raiz)->esq = arv_insereAVL(&((*raiz)->esq), palavraN);
     }
     else if (cmp > 0) {
-        (*raiz)->dir = arv_insereAVL(&((*raiz)->dir), palavra);
+        (*raiz)->dir = arv_insereAVL(&((*raiz)->dir), palavraN);
     }
     else {
         return *raiz;
     }
 
+    free(palavraN);
 
     (*raiz)->alt = 1 + max(arv_altura((*raiz)->esq), arv_altura((*raiz)->dir));
 

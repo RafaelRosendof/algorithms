@@ -26,7 +26,7 @@ void insereTrie(Trie * raiz , char * palavra); //feito
 
 bool buscaTrie(Trie * raiz , char *palavra); //feito
 
-void imprimeTrie(Trie * raiz , char * palavra , int pos); //feito
+void imprimeTrie(Trie * raiz , int nivel, char * palavra , int pos); //feito
 
 void liberaTrie(Trie * raiz); //feito
 
