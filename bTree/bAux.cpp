@@ -156,3 +156,12 @@ void Tree::arv_imprimePreOrdem(Tree *raiz){
     arv_imprimePreOrdem(raiz -> esq.get());
     arv_imprimePreOrdem(raiz -> dir.get());
 }
+
+
+int Tree::arv_altura(Tree *raiz){
+    if(!raiz){
+        return 0;
+    }
+
+    return 1 + std::max(arv_altura(raiz -> esq.get()) , arv_altura(raiz -> dir.get()));
+}

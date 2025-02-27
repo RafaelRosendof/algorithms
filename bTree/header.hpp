@@ -37,9 +37,12 @@ class Tree{
         bool arv_vazia(Tree * raiz); //feito
         bool arv_removeNode(std::unique_ptr<Tree> &raiz , int code); //feito
 
-        void arv_imprimeOrdem(Tree * raiz);
-        void arv_imprimePreOrdem(Tree * raiz);
-        void arv_imprimePosOrdem(Tree * raiz);
+        int arv_altura(Tree * raiz); //feito
+
+        
+        void arv_imprimeOrdem(Tree * raiz);//feito
+        void arv_imprimePreOrdem(Tree * raiz);//feito
+        void arv_imprimePosOrdem(Tree * raiz);//feito
 
         int arv_altura(Tree * raiz);
 
