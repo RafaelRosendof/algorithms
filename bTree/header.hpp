@@ -39,12 +39,12 @@ class Tree{
 
         int arv_altura(Tree * raiz); //feito
 
-        
+
         void arv_imprimeOrdem(Tree * raiz);//feito
         void arv_imprimePreOrdem(Tree * raiz);//feito
         void arv_imprimePosOrdem(Tree * raiz);//feito
 
-        int arv_altura(Tree * raiz);
+        //int arv_altura(Tree * raiz);
 
 
 
