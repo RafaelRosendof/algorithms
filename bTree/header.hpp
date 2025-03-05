@@ -33,6 +33,7 @@ class Tree{
         void  arv_insere(Tree * raiz , Node no); //feito
         Node * arv_CriaNo(Node no); //feito
         Tree * arv_buscaNode(Tree * raiz , int code); //feito
+        Tree * arv_buscaNodeT(Tree *raiz , int code);
 
         bool arv_vazia(Tree * raiz); //feito
         bool arv_removeNode(std::unique_ptr<Tree> &raiz , int code); //feito

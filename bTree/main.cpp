@@ -32,6 +32,9 @@ int main(){
 
     raiz -> arv_imprimeOrdem(raiz.get());
 
+    std::cout<< "\n\n removido elemento 3" <<std::endl;
+    raiz -> arv_removeNode(raiz , 3);
 
+    raiz -> arv_imprimePosOrdem(raiz.get());
     return 0;
 }

@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <future>
 #include <iostream>
 #include <algorithm>
 #include "header.hpp"
@@ -50,6 +51,29 @@ void  Tree::arv_insere(Tree *raiz , Node no){
     else{
         std::cout<<"\n\n Nó já existe! \n\n";
     }
+}
+
+Tree *Tree::arv_buscaNodeT(Tree * raiz , int codigo){
+    if(raiz == nullptr || raiz -> no.code == codigo){
+        std::cout << "Arvore vaiza meu caro \n\n "<< std::endl;
+        return raiz;
+    }
+
+    if(raiz -> esq && raiz -> dir){
+        std::future<Tree*> esqFreak = std::async(std::launch::async , &Tree::arv_buscaNodeT, this, raiz->esq.get() , codigo );
+
+        Tree * dirFreak = arv_buscaNodeT(raiz -> dir.get() , codigo);
+
+        Tree * esqRes = esqFreak.get();
+
+        return esqRes ? esqRes : dirFreak;
+    }
+
+    if( codigo < raiz -> no.code && raiz -> esq){ return arv_buscaNodeT(raiz->esq.get() , codigo);}
+
+    else if(raiz -> dir){ return arv_buscaNodeT(raiz-> dir.get() , codigo);}
+
+    return nullptr;
 }
 
 Tree * Tree::arv_buscaNode(Tree * raiz , int codigo){
