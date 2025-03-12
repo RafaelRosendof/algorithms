@@ -157,3 +157,54 @@ int Tree::arv_Altura(std::shared_ptr<Node> raiz){
 
     return alt2 + 1;
 }
+
+void Tree::arv_InsereRB(std::shared_ptr<Node> &raiz , std::shared_ptr<Node> no){
+    if(raiz == nullptr){ //primeiro caso
+        no -> setCor(BLACK);
+        raiz = no;
+        return;
+    }
+
+    std::shared_ptr<Node> y = nullptr;
+
+    auto x = raiz;
+
+    while(x != nullptr){
+        y = x;
+
+        if( no -> getScore() < x -> getScore()){
+           x = x -> getEsq();
+        } else{
+            x = x -> getDir();
+        }
+    }
+
+    no -> setPai(y);
+
+    if( y == nullptr){
+        raiz = no;
+    }
+    if( no -> getScore() < y -> getScore()){
+        y -> setEsq(no);
+    }else{
+        y -> setDir(no);
+    }
+
+    no -> setEsq(nullptr);
+    no -> setDir(nullptr);
+    no -> setCor(RED);
+
+    cor_Insert(raiz, no); // precisa da referência da arvore ou raiz?
+}
+
+void Tree::cor_Insert(std::shared_ptr<Node> &raiz ,std::shared_ptr<Node> node){
+
+}
+
+void Tree::arv_Remove(std::shared_ptr<Node> &raiz , int codigo){
+
+}
+
+void Tree::cor_Remove(std::shared_ptr<Node> &raiz,std::shared_ptr<Node> no){
+
+}

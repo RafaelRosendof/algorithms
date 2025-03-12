@@ -46,6 +46,8 @@ class Node{
         void setDir(std::shared_ptr<Node> dir) {this->dir = dir;}
         void setPai(std::weak_ptr<Node> pai) {this->pai = pai;}
 
+        //void setPointer(std::shared_ptr<Node> pointer) {this -> }
+
         friend class Tree;
 };
 
@@ -54,8 +56,8 @@ class Tree{
     private:
         std::shared_ptr<Node> raiz;
 
-        void cor_Insert(std::shared_ptr<Node> no);
-        void cor_Remove(std::shared_ptr<Node> no);
+        void cor_Insert(std::shared_ptr<Node> &raiz,std::shared_ptr<Node> no);
+        void cor_Remove(std::shared_ptr<Node> &raiz,std::shared_ptr<Node> no);
         void transplant(std::shared_ptr<Node> raiz , std::shared_ptr<Node> u , std::shared_ptr<Node> v); //feito
         std::shared_ptr<Node> minimum(std::shared_ptr<Node> node); //feito
 
@@ -74,9 +76,9 @@ class Tree{
 
         int arv_Altura(std::shared_ptr<Node> raiz); //feito
 
-        void arv_InsereRB(std::shared_ptr<Node> raiz , Node no); //
+        void arv_InsereRB(std::shared_ptr<Node> &raiz , std::shared_ptr<Node> no); //
 
-        void arv_Remove(std::shared_ptr<Node> raiz , Node no); //
+        void arv_Remove(std::shared_ptr<Node> &raiz , int codigo); //
 
         void arv_ImprimeNode(std::shared_ptr<Node> no); //feito
         void arv_ImprimeOrdem(std::shared_ptr<Node> raiz); //feito
