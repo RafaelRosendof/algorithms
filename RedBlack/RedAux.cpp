@@ -203,8 +203,123 @@ void Tree::cor_Insert(std::shared_ptr<Node> &raiz ,std::shared_ptr<Node> node){
 
 void Tree::arv_Remove(std::shared_ptr<Node> &raiz , int codigo){
 
+    if( raiz == nullptr){
+        std::cout << "Arvore está vazia nada a remover \n" << std::endl;
+        return;
+    }
+
+    auto y = arv_buscaArv(raiz, codigo);
+    auto yBack = y;
+    auto yCor = y -> getColor();
+
+    std::shared_ptr<Node> x = nullptr;
+
+    if( y -> getEsq() == nullptr){
+        x = y -> getDir();
+        transplant(raiz , y , y -> getDir());
+    } else if( y -> getDir() == nullptr){
+        x = y -> getEsq();
+        transplant(raiz , y , y -> getEsq());
+    } else{
+        y = minimum(y -> getDir());
+        yCor = y -> getColor();
+        x = y -> getDir();
+
+        if (y -> getPai().lock() == yBack){
+            //x -> setPai(y);
+        
+            if (x != nullptr){
+                x -> setPai(y);
+            }
+        } else{
+            transplant(raiz , y , y -> getDir());
+            y -> setDir(yBack -> getDir());
+            if (y -> getDir() != nullptr){
+                y -> getDir() -> setPai(y);
+            }
+        }
+
+        transplant(raiz , yBack , y);
+        y -> setEsq(yBack -> getEsq());
+        y -> getEsq() -> setPai(y);
+        y -> setColor(yBack -> getColor());
+    }
+
+    if (yCor == BLACK){
+        cor_Remove(raiz, x);
+    }
+
+    return true;
 }
 
 void Tree::cor_Remove(std::shared_ptr<Node> &raiz,std::shared_ptr<Node> no){
+    while( no != raiz && no == nullptr || no -> getColor() == BLACK){
+        if (no == no -> getPai().lock() -> getEsq()){
+            auto w = no -> getPai().lock() -> getDir();
+            if(w -> getColor() == RED){
+                w -> setColor(BLACK);
+                no -> getPai().lock() -> setColor(BLACK);
+                rotationLeft(raiz, no -> getPai().lock());
+                w = no -> getPai().lock() -> getDir();
+            }
 
+            if(w -> getEsq() == nullptr || w -> getEsq() -> getColor() == BLACK && w -> getDir() == nullptr || w -> getDir() -> getColor() == BLACK){
+                w -> setColor(RED);
+                no = no -> getPai().lock();
+            } else{
+                if (w -> getDir() == nullptr || w -> getDir() -> getColor() == BLACK){
+                    w -> getEsq() -> setColor(BLACK);
+                    w -> setColor(RED);
+                    rotationRigth(raiz, w);
+                    w = no -> getPai().lock() -> getDir();
+                }
+
+                w -> setColor(no -> getPai().lock() -> getColor());
+                no -> getPai().lock() -> setColor(BLACK);
+
+                if( w -> getDir() != nullptr){
+                    w -> getDir() -> setColor(BLACK);
+                }
+
+                rotationLeft(raiz, no -> getPai().lock());
+                no = raiz;
+            }
+        
+        } else{
+            auto w = no -> getPai().lock() -> getEsq();
+            if (w -> getColor() == RED ){
+                w -> setColor(BLACK);
+                no -> getPai().lock() -> setColor(RED);
+                ratitionRigth(raiz, no -> getPai().lock());
+                w = no -> getPai().lock() -> getEsq();
+            }
+
+            if(w -> getDir() == nullptr || w -> getDir() -> getColor() == BLACK && w -> getEsq() == nullptr || w -> getEsq() -> getColor() == BLACK){
+                w -> setColor(RED);
+                no = no -> getPai().lock();
+            } else{
+                if ( w -> getEsq() == nullptr || w -> getEsq() -> getColor() == BLACK){
+                    w -> getDir() -> setColor(BLACK);
+                    w -> setColor(RED);
+                    rotationLeft(raiz, w);
+                    w = no -> getPai().lock() -> getEsq();
+                }
+
+                w -> setColor( no -> getPai().lock() -> getColor());
+                no -> getPai().lock() -> setColor(BLACK);
+
+                if( w -> getEsq() != nullptr){
+                    w -> getEsq() -> setColor(BLACK);
+                }
+
+                rotationRigth(raiz, no -> getPai().lock());
+                no = raiz;
+            }
+        }
+
+    }
+
+    if (no != nullptr){
+        no -> setColor(BLACK);
+    }
 }
